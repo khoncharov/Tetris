@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "description": "tetris prototype, pet project",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test-board": "node src/app/board.js"
+    "test-board": "node src/app/model/board.test.js"
   },
   "keywords": [
     "tetris",
