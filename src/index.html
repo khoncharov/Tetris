@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tetris</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <div class="ui-container">
+        <section class="game-board"></section>
+        <section class="controls">
+          <div class="next-shape_container"></div>
+          <div class="stats_container">
+            <p>Level: <span id="game-level"></span></p>
+            <p>Score: <span id="game-score"></span></p>
+            <p>Best: <span id="best-score"></span></p>
+          </div>
+          <div class="help_container">
+            <p>A - move left</p>
+            <p>D - move right</p>
+            <p>W - rotate</p>
+            <p>S - push down</p>
+          </div>
+          <div class="btn_container">
+            <button class="btn" type="button" id="btn-start">Start</button>
+            <button class="btn" type="button" id="btn-reset">Reset</button>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>
