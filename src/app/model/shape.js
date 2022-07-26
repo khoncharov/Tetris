@@ -6,6 +6,8 @@ export class Shape {
     this.position = { top: 0, left: (BOARD_WIDTH / 2) | 0 }
     this.rotation = Math.floor(Math.random() * 4)
     this.type = shapeType.get(Math.floor(Math.random() * shapeType.size))
+    this.width = this.type[0].length
+    this.height = this.type.length
   }
 
   moveDown = () => {
