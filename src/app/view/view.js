@@ -1,5 +1,4 @@
 import { gameModel } from '../model/model.js'
-import { BOARD_HEIGHT, BOARD_WIDTH } from '../model/const.js'
 import { BLOCK_SIDE } from './const.js'
 
 class GameView {
@@ -23,8 +22,10 @@ class GameView {
   }
 
   setBoardSize = () => {
-    this.board.style.width = `${BLOCK_SIDE * BOARD_WIDTH}px`
-    this.board.style.height = `${BLOCK_SIDE * BOARD_HEIGHT}px`
+    const boardWidth = this.game.board.width
+    const boardHeight = this.game.board.height
+    this.board.style.width = `${BLOCK_SIDE * boardWidth}px`
+    this.board.style.height = `${BLOCK_SIDE * boardHeight}px`
   }
 
   createBlock = (color, row, colomn) => {

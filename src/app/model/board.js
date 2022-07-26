@@ -1,13 +1,15 @@
 class Board {
   constructor(width, height) {
-    this.board = this.create(width, height)
+    this.width = width
+    this.height = height
+    this.board = this.create()
   }
 
-  create = (width, height) => {
+  create = () => {
     const res = []
-    for (let i = 0; i <= width; i += 1) {
+    for (let i = 0; i <= this.width; i += 1) {
       res.push([])
-      for (let j = 0; j <= height; j += 1) {
+      for (let j = 0; j <= this.height; j += 1) {
         res[i].push(0)
       }
     }
@@ -16,7 +18,7 @@ class Board {
 
   reset = () => {
     this.board.forEach((row) => {
-      row.forEach((item, index) => {
+      row.forEach((_, index) => {
         row[index] = 0
       })
     })
@@ -47,14 +49,18 @@ class Board {
   }
 
   removeRow = (index) => {
-    const boardWidth = board[0].length
     const newArr = [...this.board.slice(0, index), ...this.board.slice(index + 1)]
-    newArr.unshift(new Array(boardWidth).fill(0))
+    newArr.unshift(new Array(this.board.width).fill(0))
     return newArr
+  }
+
+  isOverflown = () => {
+    const OVERFLOW_ROW_INDEX = 3
+    return this.board[OVERFLOW_ROW_INDEX].some((item) => item > 0)
   }
 }
 
-const BOARD_WIDTH = 17
-const BOARD_HEIGHT = 29
+export const BOARD_WIDTH = 17
+export const BOARD_HEIGHT = 29
 
 export const board = new Board(BOARD_WIDTH, BOARD_HEIGHT)

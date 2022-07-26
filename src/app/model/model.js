@@ -1,5 +1,5 @@
 import { Shape } from './shape.js'
-import { board } from './board/board.js'
+import { board } from './board.js'
 
 class GameModel {
   constructor(board) {

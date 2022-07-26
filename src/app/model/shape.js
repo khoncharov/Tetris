@@ -1,5 +1,5 @@
-import { BOARD_WIDTH } from './const.js'
-import { shapeType } from './shape-const.js'
+import { BOARD_WIDTH } from './board.js'
+import { shapeType } from './shape-types.js'
 
 export class Shape {
   constructor() {
@@ -13,15 +13,11 @@ export class Shape {
   }
 
   moveLeft = () => {
-    if (this.position.left > 0) {
-      this.position.left -= 1
-    }
+    this.position.left -= 1
   }
 
   moveRight = () => {
-    if (this.position.left < BOARD_WIDTH) {
-      this.position.left += 1
-    }
+    this.position.left += 1
   }
 
   rotate = () => {
