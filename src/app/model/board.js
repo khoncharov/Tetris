@@ -1,3 +1,5 @@
+import { createMatrix } from './utils.js'
+
 class Board {
   constructor(width, height) {
     this.width = width
@@ -6,13 +8,7 @@ class Board {
   }
 
   create = (color = 0) => {
-    this.board = []
-    for (let i = 0; i < this.height; i += 1) {
-      this.board.push([])
-      for (let j = 0; j < this.width; j += 1) {
-        this.board[i].push(color)
-      }
-    }
+    this.board = createMatrix(this.width, this.height, color)
   }
 
   merge = (shape) => {
