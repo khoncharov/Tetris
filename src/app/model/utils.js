@@ -8,3 +8,7 @@ export const createMatrix = (width, height, value = 0) => {
   }
   return result
 }
+
+export const getRandomInteger = (capValue) => {
+  return Math.floor(Math.random() * (capValue + 1))
+}
