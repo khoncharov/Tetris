@@ -113,11 +113,8 @@ board.board = [
   [7, 2, 2],
   [8, 2, 2],
 ]
-let rowsToRemove = board._findFullRows()
-assert.deepStrictEqual(rowsToRemove, [0, 1, 2, 3, 4])
-
 let removedRows = board.removeFullRows()
-assert.deepStrictEqual(removedRows, rowsToRemove)
+assert.deepStrictEqual(removedRows, [0, 1, 2, 3, 4])
 assert.deepStrictEqual(board.board, [
   [0, 0, 0],
   [0, 0, 0],
@@ -136,11 +133,8 @@ board.board = [
   [7, 2, 2],
   [0, 0, 2],
 ]
-rowsToRemove = board._findFullRows()
-assert.deepStrictEqual(rowsToRemove, [0, 2, 3])
-
 removedRows = board.removeFullRows()
-assert.deepStrictEqual(removedRows, rowsToRemove)
+assert.deepStrictEqual(removedRows, [0, 2, 3])
 assert.deepStrictEqual(board.board, [
   [0, 0, 0],
   [0, 0, 0],
@@ -157,11 +151,8 @@ board.board = [
   [1, 4, 1],
   [2, 2, 0],
 ]
-rowsToRemove = board._findFullRows()
-assert.deepStrictEqual(rowsToRemove, [1])
-
 removedRows = board.removeFullRows()
-assert.deepStrictEqual(removedRows, rowsToRemove)
+assert.deepStrictEqual(removedRows, [1])
 assert.deepStrictEqual(board.board, [
   [0, 0, 0],
   [0, 0, 0],
@@ -176,11 +167,8 @@ board.board = [
   [0, 4, 1],
   [2, 2, 0],
 ]
-rowsToRemove = board._findFullRows()
-assert.deepStrictEqual(rowsToRemove, [])
-
 removedRows = board.removeFullRows()
-assert.deepStrictEqual(removedRows, rowsToRemove)
+assert.deepStrictEqual(removedRows, [])
 assert.deepStrictEqual(board.board, [
   [0, 1, 0],
   [0, 4, 1],

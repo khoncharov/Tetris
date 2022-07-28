@@ -1,13 +1,31 @@
-import { BOARD_WIDTH } from './board.js'
 import { shapeType } from './shape-types.js'
+import { createMatrix } from './utils.js'
 
 export class Shape {
-  constructor() {
-    this.position = { top: 0, left: (BOARD_WIDTH / 2) | 0 }
-    this.rotation = Math.floor(Math.random() * 4)
-    this.type = shapeType.get(Math.floor(Math.random() * shapeType.size))
+  constructor(typeIndex, rotation) {
+    const shape = shapeType.get(typeIndex)
+    this.name = shape.name
+    this.type = shape.matrix
+    this.center = shape.centerPos
+    this.rotation = rotation
+    this.#setInitialShapeRotation(rotation)
     this.width = this.type[0].length
     this.height = this.type.length
+    this.#position = null
+  }
+
+  #setInitialShapeRotation = (rotation) => {
+    for (let i = 0; i < rotation; i += 1) {
+      this.rotate()
+    }
+  }
+
+  get position() {
+    return this.#position
+  }
+
+  set position(value) {
+    this
   }
 
   moveDown = () => {
@@ -23,6 +41,18 @@ export class Shape {
   }
 
   rotate = () => {
-    console.log('Shape rotation is not implemented')
+    const destWidth = this.height
+    const destHeight = this.width
+    const dest = createMatrix(destWidth, destHeight)
+    this.type.forEach((row, i) => {
+      row.forEach((value, j) => {
+        dest[j][i] = value
+      })
+    })
+    dest.forEach((row) => row.reverse())
+    this.type = dest
+    this.width = destWidth
+    this.height = destHeight
+    this.rotation === 3 ? 0 : (this.rotation += 1)
   }
 }

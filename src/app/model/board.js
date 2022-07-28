@@ -11,6 +11,10 @@ class Board {
     this.board = createMatrix(this.width, this.height, color)
   }
 
+  reset = () => {
+    this.create()
+  }
+
   merge = (shape) => {
     const shiftX = shape.position.left
     const shiftY = shape.position.top
@@ -24,7 +28,7 @@ class Board {
     }
   }
 
-  _findFullRows = () => {
+  #findFullRows = () => {
     const res = []
     this.board.forEach((row, index) => {
       const isFilled = row.every((item) => item > 0)
@@ -36,7 +40,7 @@ class Board {
   }
 
   removeFullRows = () => {
-    const rowsToRemove = this._findFullRows()
+    const rowsToRemove = this.#findFullRows()
     rowsToRemove.forEach((index) => {
       this.board = [...this.board.slice(0, index), ...this.board.slice(index + 1)]
       this.board.unshift(new Array(this.width).fill(0))
@@ -47,6 +51,27 @@ class Board {
   isOverflown = () => {
     const OVERFLOW_ROW_INDEX = 2
     return this.board[OVERFLOW_ROW_INDEX].some((item) => item > 0)
+  }
+
+  canShapeMoveDown = (shape) => {
+    console.log('canShapeMoveDown() Not implemented')
+    return true
+  }
+
+  canShapeMoveLeft = (shape) => {
+    console.log('canShapeMoveLeft() Not implemented')
+
+    return true
+  }
+
+  canShapeMoveRight = (shape) => {
+    console.log('canShapeMoveRight() Not implemented')
+    return true
+  }
+
+  canShapeRotate = (shape) => {
+    console.log('canShapeRotate() Not implemented')
+    return true
   }
 }
 
