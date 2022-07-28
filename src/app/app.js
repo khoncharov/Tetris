@@ -1,4 +1,11 @@
-import { KEY_MOVE_DOWN, KEY_MOVE_LEFT, KEY_MOVE_RIGHT, KEY_ROTATE } from './const.js'
+import {
+  GAME_PAUSED,
+  GAME_STARTED,
+  KEY_MOVE_DOWN,
+  KEY_MOVE_LEFT,
+  KEY_MOVE_RIGHT,
+  KEY_ROTATE,
+} from './const.js'
 import { gameModel } from './model/model.js'
 import { gameView } from './view/view.js'
 
@@ -16,47 +23,52 @@ class App {
   }
 
   startBtnHandler = () => {
-    if (this.game.isStarted) {
+    if (this.game.state === GAME_STARTED) {
       this.game.pause()
-      this.view.update()
     } else {
       this.game.start()
-      this.view.update()
     }
   }
 
   resetBtnHandler = () => {
-    this.game.reset()
-    this.view.update()
+    if (this.game.state === GAME_STARTED || this.game.state === GAME_PAUSED) {
+      this.game.reset()
+    }
   }
 
   rotationHandler = (e) => {
     const key = e.code
-    if (this.game.isStarted && this.game.currShape) {
+    if (this.game.state === GAME_STARTED) {
       if (key === KEY_ROTATE) {
-        this.game.currShape.rotate()
+        const canRotate = this.game.board.canShapeRotate(this.game.shape)
+        if (canRotate) {
+          this.game.shape.rotate()
+        }
       }
     }
   }
 
   movementHandler = (e) => {
     const key = e.code
-    if (this.game.isStarted && this.game.currShape) {
+    if (this.game.state === GAME_STARTED) {
       switch (key) {
         case KEY_MOVE_LEFT:
-          this.game.currShape.moveLeft()
-          // console.log(this.game.currShape.position)
+          const canMoveLeft = this.game.board.canMoveLeft(this.game.shape)
+          if (canMoveLeft) {
+            this.game.shape.moveLeft()
+          }
           break
         case KEY_MOVE_RIGHT:
-          this.game.currShape.moveRight()
-          // console.log(this.game.currShape.position)
-          // update shape view
+          const canMoveRight = this.game.board.canMoveRight(this.game.shape)
+          if (canMoveRight) {
+            this.game.shape.moveRight()
+          }
           break
         case KEY_MOVE_DOWN:
-          // check for collision
-          this.game.currShape.moveDown()
-          // console.log(this.game.currShape.position)
-          // update shape view
+          const canMoveDown = this.game.board.canMoveDown(this.game.shape)
+          if (canMoveDown) {
+            this.game.shape.moveDown()
+          }
           break
         default:
           break
