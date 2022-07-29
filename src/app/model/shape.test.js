@@ -2,6 +2,8 @@ import assert from 'assert/strict'
 
 import { Shape } from './shape.js'
 
+console.time('Test time')
+
 /* New shapes */
 
 const testNewShape = (shapeIndex, rotation, expertedShape) => {
@@ -115,3 +117,4 @@ assert.deepEqual(s2.position, { top: 10 + 6, left: 5 - 5 + 2 })
 /* Test result */
 
 console.log(`Shape tests - \x1b[1;36mDONE\x1b[0m`)
+console.timeEnd('Test time')
