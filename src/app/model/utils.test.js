@@ -1,5 +1,5 @@
 import assert from 'assert/strict'
-import { createMatrix } from './utils.js'
+import { createMatrix, getRandomInteger } from './utils.js'
 
 /* Create matrix */
 
@@ -16,6 +16,17 @@ assert.deepStrictEqual(m, [
   [8, 8],
   [8, 8],
 ])
+
+/* Get random integer */
+
+let randIntArr = []
+for (let i = 0; i < 100; i += 1) {
+  randIntArr.push(getRandomInteger(2))
+}
+assert(randIntArr.every((item) => item >= 0 && item <= 2))
+assert(randIntArr.some((item) => item !== 0))
+assert(randIntArr.some((item) => item !== 1))
+assert(randIntArr.some((item) => item !== 2))
 
 /* Test result */
 
