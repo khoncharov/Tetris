@@ -1,3 +1,4 @@
+import { Shape } from './shape.js'
 import { createMatrix } from './utils.js'
 
 class Board {
@@ -16,9 +17,9 @@ class Board {
   }
 
   merge = (shape) => {
-    const center = shape.centerPos.get(shape.rotation)
-    const shiftX = shape.position.left - center.j
-    const shiftY = shape.position.top - center.i
+    const centerPos = shape.centerPos.get(shape.rotation)
+    const shiftX = shape.position.left - centerPos.j
+    const shiftY = shape.position.top - centerPos.i
     for (let i = 0; i < shape.height; i += 1) {
       for (let j = 0; j < shape.width; j += 1) {
         const color = shape.type[i][j]
@@ -54,23 +55,49 @@ class Board {
     return this.board[OVERFLOW_ROW_INDEX].some((item) => item > 0)
   }
 
-  canShapeMoveDown = (shape) => {
-    console.log('canShapeMoveDown() Not implemented')
+  canMoveDown = (shape) => {
+    const shapeCopy = new Shape(shape.index, shape.rotation)
+    shapeCopy.position = { ...shape.position }
+    shapeCopy.moveDown()
+    const centerPos = shapeCopy.centerPos.get(shapeCopy.rotation)
+
+    // Check for collision with borders
+    const borderCollisionAhead =
+      board.height < shapeCopy.position.top - centerPos.i + shapeCopy.height
+    if (borderCollisionAhead) {
+      return false
+    }
+
+    // Check for collision with objects
+    // const debrisCollisionAhead = checkDebrisCollision(shape)
+    const shiftX = shapeCopy.position.left - centerPos.j
+    const shiftY = shapeCopy.position.top - centerPos.i
+    for (let i = 0; i < shapeCopy.height; i += 1) {
+      for (let j = 0; j < shapeCopy.width; j += 1) {
+        const isFilledShapeBlock = Boolean(shapeCopy.type[i][j])
+        if (isFilledShapeBlock) {
+          const isFilledBoardBlock = Boolean(this.board[i + shiftY][j + shiftX])
+          if (isFilledBoardBlock) {
+            return false
+          }
+        }
+      }
+    }
+
     return true
   }
 
-  canShapeMoveLeft = (shape) => {
+  canMoveLeft = (shape) => {
     console.log('canShapeMoveLeft() Not implemented')
-
     return true
   }
 
-  canShapeMoveRight = (shape) => {
+  canMoveRight = (shape) => {
     console.log('canShapeMoveRight() Not implemented')
     return true
   }
 
-  canShapeRotate = (shape) => {
+  canRotate = (shape) => {
     console.log('canShapeRotate() Not implemented')
     return true
   }

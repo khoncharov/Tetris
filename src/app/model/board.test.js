@@ -5,7 +5,7 @@ import { Shape } from './shape.js'
 
 console.time('Test time')
 
-/* Create board */
+/* Create/reset board */
 
 // 1
 board.width = 5
@@ -32,6 +32,13 @@ board.create(5)
 assert.deepStrictEqual(board.board, [
   [5, 5, 5, 5],
   [5, 5, 5, 5],
+])
+
+// 4
+board.reset()
+assert.deepStrictEqual(board.board, [
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
 ])
 
 /* Shape merge */
