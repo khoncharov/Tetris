@@ -1,7 +1,7 @@
 import { Shape } from './shape.js'
 import { createMatrix } from './utils.js'
 
-class Board {
+export class Board {
   constructor(width, height) {
     this.width = width
     this.height = height
@@ -63,7 +63,8 @@ class Board {
 
     // Check for collision with borders
     const borderCollisionAhead =
-      board.height < shapeCopy.position.top - centerPos.i + shapeCopy.height
+      this.height < shapeCopy.position.top - centerPos.i + shapeCopy.height
+
     if (borderCollisionAhead) {
       return false
     }
@@ -102,8 +103,3 @@ class Board {
     return true
   }
 }
-
-export const BOARD_WIDTH = 17
-export const BOARD_HEIGHT = 17
-
-export const board = new Board(BOARD_WIDTH, BOARD_HEIGHT)

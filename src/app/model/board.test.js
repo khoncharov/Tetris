@@ -1,11 +1,13 @@
 import assert from 'assert/strict'
 
-import { board } from './board.js'
+import { Board } from './board.js'
 import { Shape } from './shape.js'
 
 console.time('Test time')
 
 /* Create/reset board */
+
+const board = new Board(1, 1)
 
 // 1
 board.width = 5

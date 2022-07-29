@@ -1,11 +1,13 @@
 import assert from 'assert/strict'
 
-import { board } from './board.js'
+import { Board } from './board.js'
 import { Shape } from './shape.js'
 
 console.time('Test time')
 
 /* Can Shape move down */
+
+const board = new Board(1, 1)
 
 // i-shape border collisions
 board.width = 6
@@ -21,7 +23,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 8)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -34,6 +35,7 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [1, 1, 1, 1, 0, 0],
 ])
+assert.strictEqual(iterations, 8)
 
 board.reset()
 typeIndex = 0
@@ -46,7 +48,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 7)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -59,6 +60,7 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 1, 0, 0, 0],
   [0, 0, 1, 0, 0, 0],
 ])
+assert.strictEqual(iterations, 7)
 
 board.reset()
 typeIndex = 0
@@ -71,7 +73,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 8)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -84,6 +85,7 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [1, 1, 1, 1, 0, 0],
 ])
+assert.strictEqual(iterations, 8)
 
 board.reset()
 typeIndex = 0
@@ -96,7 +98,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 7)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -109,6 +110,7 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 1, 0, 0, 0],
   [0, 0, 1, 0, 0, 0],
 ])
+assert.strictEqual(iterations, 7)
 
 // t-shape border collisions
 board.reset()
@@ -122,7 +124,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 8)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -135,6 +136,7 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 5, 0, 0, 0],
   [0, 5, 5, 5, 0, 0],
 ])
+assert.strictEqual(iterations, 8)
 
 board.reset()
 typeIndex = 6
@@ -147,7 +149,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 7)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -160,6 +161,7 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 5, 5, 0, 0],
   [0, 0, 5, 0, 0, 0],
 ])
+assert.strictEqual(iterations, 7)
 
 board.reset()
 typeIndex = 6
@@ -172,7 +174,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 7)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -185,6 +186,7 @@ assert.deepStrictEqual(board.board, [
   [0, 5, 5, 5, 0, 0],
   [0, 0, 5, 0, 0, 0],
 ])
+assert.strictEqual(iterations, 7)
 
 board.reset()
 typeIndex = 6
@@ -197,7 +199,6 @@ while (board.canMoveDown(shape)) {
   shape.moveDown()
 }
 board.merge(shape)
-assert.strictEqual(iterations, 7)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -210,6 +211,7 @@ assert.deepStrictEqual(board.board, [
   [0, 5, 5, 0, 0, 0],
   [0, 0, 5, 0, 0, 0],
 ])
+assert.strictEqual(iterations, 7)
 
 // t-shape debris collision
 board.board = [
