@@ -6,26 +6,18 @@ export class Shape {
     const shape = shapeType.get(typeIndex)
     this.name = shape.name
     this.type = shape.matrix
-    this.center = shape.centerPos
-    this.rotation = rotation
-    this.#setInitialShapeRotation(rotation)
     this.width = this.type[0].length
     this.height = this.type.length
-    this.#position = null
+    this.rotation = 0
+    this.centerPos = shape.centerPos
+    this.#setInitialShapeRotation(rotation)
+    this.position = null
   }
 
   #setInitialShapeRotation = (rotation) => {
     for (let i = 0; i < rotation; i += 1) {
       this.rotate()
     }
-  }
-
-  get position() {
-    return this.#position
-  }
-
-  set position(value) {
-    this
   }
 
   moveDown = () => {
@@ -53,6 +45,6 @@ export class Shape {
     this.type = dest
     this.width = destWidth
     this.height = destHeight
-    this.rotation === 3 ? 0 : (this.rotation += 1)
+    this.rotation === 3 ? (this.rotation = 0) : (this.rotation += 1)
   }
 }

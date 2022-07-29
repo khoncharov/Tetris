@@ -1,4 +1,4 @@
-import { getRandomInteger } from './utils'
+import { getRandomInteger } from './utils.js'
 
 export const I_SHAPE = {
   name: 'i-shape',
@@ -105,7 +105,7 @@ export const shapeType = new Map([
   [6, T_SHAPE],
 ])
 
-export const getRandomShapeType = () => {
+export const getRandomShape = () => {
   return getRandomInteger(shapeType.size - 1)
 }
 
