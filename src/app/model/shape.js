@@ -4,7 +4,7 @@ import { createMatrix } from './utils.js'
 export class Shape {
   constructor(typeIndex, rotation) {
     const shape = shapeType.get(typeIndex)
-    this.name = shape.name
+    this.index = shape.index
     this.type = shape.matrix
     this.width = this.type[0].length
     this.height = this.type.length
