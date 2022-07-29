@@ -1,6 +1,9 @@
 import assert from 'assert/strict'
 
 import { board } from './board.js'
+import { Shape } from './shape.js'
+
+console.time('Test time')
 
 /* Create board */
 
@@ -34,71 +37,49 @@ assert.deepStrictEqual(board.board, [
 /* Shape merge */
 
 // 1
-let shape = {
-  width: 3,
-  height: 2,
-  type: [
-    [1, 1, 1],
-    [0, 1, 0],
-  ],
-  position: { top: 0, left: 0 },
-}
-
+let typeIndex = 6
+let rotation = 2
+let shape = new Shape(typeIndex, rotation)
+shape.position = { top: 1, left: 2 }
 board.width = 5
 board.height = 5
 board.create()
 board.merge(shape)
-
 assert.deepStrictEqual(board.board, [
-  [1, 1, 1, 0, 0],
-  [0, 1, 0, 0, 0],
   [0, 0, 0, 0, 0],
+  [0, 5, 5, 5, 0],
+  [0, 0, 5, 0, 0],
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
 ])
 
-// 2.1
-shape = {
-  width: 2,
-  height: 3,
-  type: [
-    [2, 2],
-    [0, 2],
-    [0, 2],
-  ],
-  position: { top: 1, left: 3 },
-}
-
+// 2
+typeIndex = 0
+rotation = 1
+shape = new Shape(typeIndex, rotation)
+shape.position = { top: 3, left: 1 }
 board.width = 5
-board.height = 4
+board.height = 5
 board.create()
 board.merge(shape)
-
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0],
-  [0, 0, 0, 2, 2],
-  [0, 0, 0, 0, 2],
-  [0, 0, 0, 0, 2],
+  [0, 1, 0, 0, 0],
+  [0, 1, 0, 0, 0],
+  [0, 1, 0, 0, 0],
+  [0, 1, 0, 0, 0],
 ])
 
-// 2.2
-shape = {
-  width: 2,
-  height: 2,
-  type: [
-    [3, 3],
-    [3, 3],
-  ],
-  position: { top: 2, left: 2 },
-}
-
+shape.rotate()
+shape.moveRight()
+shape.moveRight()
 board.merge(shape)
-
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0],
-  [0, 0, 0, 2, 2],
-  [0, 0, 3, 3, 2],
-  [0, 0, 3, 3, 2],
+  [0, 1, 0, 0, 0],
+  [0, 1, 0, 0, 0],
+  [0, 1, 1, 1, 1],
+  [0, 1, 0, 0, 0],
 ])
 
 /* Find full row and remove */
@@ -204,3 +185,4 @@ assert(board.isOverflown() === true)
 /* Test result */
 
 console.log(`Board tests - \x1b[1;36mDONE\x1b[0m`)
+console.timeEnd('Test time')

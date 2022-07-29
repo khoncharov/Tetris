@@ -16,8 +16,9 @@ class Board {
   }
 
   merge = (shape) => {
-    const shiftX = shape.position.left
-    const shiftY = shape.position.top
+    const center = shape.centerPos.get(shape.rotation)
+    const shiftX = shape.position.left - center.j
+    const shiftY = shape.position.top - center.i
     for (let i = 0; i < shape.height; i += 1) {
       for (let j = 0; j < shape.width; j += 1) {
         const color = shape.type[i][j]
