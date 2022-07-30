@@ -300,5 +300,5 @@ assert.strictEqual(iterations, 2)
 
 /* Test result */
 
-console.log(`Board move-left tests - \x1b[1;36mDONE\x1b[0m`)
+console.log(`Board move-right tests - \x1b[1;36mDONE\x1b[0m`)
 console.timeEnd('Test time')
