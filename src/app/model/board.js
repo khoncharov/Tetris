@@ -80,7 +80,7 @@ export class Board {
 
     const centerPos = shapeCopy.centerPos.get(shapeCopy.rotation)
     const bottomBorderCollision =
-      this.height < shapeCopy.position.top - centerPos.i + shapeCopy.height
+      shapeCopy.position.top + shapeCopy.height - centerPos.i > this.height
     if (bottomBorderCollision) {
       return false
     }
@@ -113,7 +113,22 @@ export class Board {
   }
 
   canMoveRight = (shape) => {
-    console.log('canShapeMoveRight() Not implemented')
+    const shapeCopy = new Shape(shape.index, shape.rotation)
+    shapeCopy.position = { ...shape.position }
+    shapeCopy.moveRight()
+
+    const centerPos = shapeCopy.centerPos.get(shapeCopy.rotation)
+    const rightBorderCollision =
+      shapeCopy.position.left + shapeCopy.width - centerPos.j > this.width
+    if (rightBorderCollision) {
+      return false
+    }
+
+    const debrisOverlap = this.#checkDebrisOverlap(shapeCopy)
+    if (debrisOverlap) {
+      return false
+    }
+
     return true
   }
 
