@@ -6,13 +6,14 @@ import {
   KEY_MOVE_RIGHT,
   KEY_ROTATE,
 } from './const.js'
-import { gameModel } from './model/model.js'
-import { gameView } from './view/view.js'
+import { GameModel } from './model/model.js'
+import { GameView } from './view/view.js'
 
-class App {
+class GameController {
   constructor(gameModel, gameView) {
     this.game = gameModel
     this.view = gameView
+    this.timer = null
   }
 
   init = () => {
@@ -24,14 +25,21 @@ class App {
 
   startBtnHandler = () => {
     if (this.game.state === GAME_STARTED) {
+      this.removerTimer(this.timer)
       this.game.pause()
+      // this.view
+    } else if (this.game.state === GAME_PAUSED) {
+      this.game.resume()
+      this.timer = this.addTimer()
     } else {
       this.game.start()
+      this.timer = this.addTimer()
     }
   }
 
   resetBtnHandler = () => {
     if (this.game.state === GAME_STARTED || this.game.state === GAME_PAUSED) {
+      this.removerTimer(this.timer)
       this.game.reset()
     }
   }
@@ -75,6 +83,38 @@ class App {
       }
     }
   }
+
+  addTimer = () => {
+    this.timer = setTimeout(this.gameTimerHandler, this.game.levelTick)
+  }
+
+  removerTimer = () => {
+    clearTimeout(this.timer)
+  }
+
+  gameTimerHandler = () => {
+    console.log(this.game.shape.position)
+    if (this.game.board.isOverflown()) {
+      this.removerTimer()
+      this.game.finish()
+    } else {
+      if (this.game.board.canMoveDown(this.game.shape)) {
+        this.game.shape.moveDown()
+        this.addTimer()
+      } else {
+        this.game.board.merge(this.game.shape)
+        const removedRows = this.game.board.removeFullRows()
+        const hasRemovedRows = Boolean(removedRows.length)
+        if (hasRemovedRows) {
+          this.game.score += removedRows.length
+        }
+        this.game.changeShape()
+        this.addTimer()
+      }
+    }
+  }
 }
 
-export const app = new App(gameModel, gameView)
+const gameModel = new GameModel(localStorage)
+const gameView = new GameView(gameModel)
+export const gameController = new GameController(gameModel, gameView)

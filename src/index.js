@@ -1,7 +1,7 @@
-import { app } from './app/app.js'
+import { gameController } from './app/game-controller.js'
 
 const bootstrap = () => {
-  app.init()
+  gameController.init()
 }
 
 bootstrap()
