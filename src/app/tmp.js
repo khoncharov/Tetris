@@ -31,8 +31,8 @@
 //       gameBox.prepend(createBlocksRow(0));
 //       x.forEach((item) => {
 //         const prevTop = +item.style.top.slice(0, -2);
-//         if (prevTop < row * BLOCK_SIDE) {
-//           const newTop = prevTop + BLOCK_SIDE;
+//         if (prevTop < row * BLOCK_SIZE) {
+//           const newTop = prevTop + BLOCK_SIZE;
 //           item.style.top = `${newTop}px`;
 //         }
 //       });

@@ -1,6 +1,5 @@
 import { gameModel } from '../model/model.js'
-import { BOARD_HEIGHT, BOARD_WIDTH } from '../model/const.js'
-import { BLOCK_SIDE } from './const.js'
+import { BLOCK_SIZE } from './const.js'
 
 class GameView {
   constructor(gameModel) {
@@ -23,23 +22,25 @@ class GameView {
   }
 
   setBoardSize = () => {
-    this.board.style.width = `${BLOCK_SIDE * BOARD_WIDTH}px`
-    this.board.style.height = `${BLOCK_SIDE * BOARD_HEIGHT}px`
+    const boardWidth = this.game.board.width
+    const boardHeight = this.game.board.height
+    this.board.style.width = `${BLOCK_SIZE * boardWidth}px`
+    this.board.style.height = `${BLOCK_SIZE * boardHeight}px`
   }
 
   createBlock = (color, row, colomn) => {
     const block = document.createElement('div')
     block.classList.add('block')
     block.classList.add(`block-${color}`)
-    block.style.top = `${row * BLOCK_SIDE}px`
-    block.style.left = `${colomn * BLOCK_SIDE}px`
+    block.style.top = `${row * BLOCK_SIZE}px`
+    block.style.left = `${colomn * BLOCK_SIZE}px`
     return block
   }
 
   createBlocksRow = (row) => {
     const blocksRow = document.createElement('div')
     blocksRow.classList.add('blocks-row')
-    blocksRow.style.top = `${row * BLOCK_SIDE}px`
+    blocksRow.style.top = `${row * BLOCK_SIZE}px`
     return blocksRow
   }
 

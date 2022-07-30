@@ -1,4 +1,4 @@
-export const BLOCK_SIDE = 24 // px
+export const BLOCK_SIZE = 24 // px
 
 export const CLR_RED = 1
 export const CLR_YELLOW = 2

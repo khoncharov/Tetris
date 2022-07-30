@@ -1,35 +1,60 @@
 import { Shape } from './shape.js'
-import { board } from './board/board.js'
+import { Board } from './board.js'
+import { getRandomShapeRotation, getRandomShape } from './shape-types.js'
+import { GAME_PAUSED, GAME_STARTED, GAME_STOPED } from '../const.js'
 
-class GameModel {
-  constructor(board) {
-    this.board = board
-    this.currShape = null
+const BOARD_WIDTH = 5
+const BOARD_HEIGHT = 14
+const LS_BEST_SCORE_NAME = 'best-score'
+const SHAPE_INIT_POS = { top: 2, left: (BOARD_WIDTH / 2) | 0 }
+
+export class GameModel {
+  constructor(localStorage) {
+    this.bestScore = localStorage.getItem(LS_BEST_SCORE_NAME) ?? 0
+    this.board = new Board(BOARD_WIDTH, BOARD_HEIGHT)
+    this.state = GAME_STOPED
+    this.shape = null
     this.nextShape = null
-    this.level = 1
-    this.levelTick = 100
-    this.score = 0
-    this.bestScore = localStorage.getItem('best-score') ?? 0
-    this.isStarted = false
+    this.levelTick = null
+    this.level = null
+    this.score = null
     this.timer = null
   }
 
   start = () => {
-    this.isStarted = true
-    this.currShape = new Shape()
-    this.nextShape = new Shape()
+    this.state = GAME_STARTED
+    this.board.reset()
+    this.shape = new Shape(getRandomShape(), getRandomShapeRotation())
+    this.shape.position = { ...SHAPE_INIT_POS }
+    this.nextShape = [getRandomShape(), getRandomShapeRotation()]
+    this.levelTick = 0
+    this.level = 1
+    this.score = 0
+    this.timer = this.addTimer()
+  }
+
+  resume = () => {
+    this.state = GAME_STARTED
     this.timer = this.addTimer()
   }
 
   pause = () => {
     this.removerTimer(this.timer)
-    this.isStarted = false
+    this.state = GAME_PAUSED
+  }
+
+  finish = () => {
+    this.removerTimer(this.timer)
+    this.state = GAME_STOPED
+    this.setBestScore()
   }
 
   reset = () => {
     this.removerTimer(this.timer)
-    this.isStarted = false
+    this.state = GAME_STOPED
     this.board.reset()
+    this.shape = null
+    this.nextShape = null
     this.level = 1
     this.score = 0
   }
@@ -43,24 +68,31 @@ class GameModel {
   }
 
   timerHandler = () => {
-    const isCollided = this.checkForCollisions()
-    if (isCollided) {
-      this.board.merge(this.currShape)
-      this.currShape = this.nextShape
-      this.nextShape = new Shape()
+    if (this.board.isOverflown()) {
+      this.finish()
     } else {
-      this.currShape.position.top += 1
+      if (this.board.canMoveDown(this.shape)) {
+        this.shape.moveDown()
+        this.addTimer()
+      } else {
+        this.board.merge(this.shape)
+        const removedRows = this.board.removeFullRows()
+        const hasRemovedRows = Boolean(removedRows.length)
+        if (hasRemovedRows) {
+          this.score += removedRows.length
+        }
+        this.shape = new Shape(this.nextShape[0], this.nextShape[1])
+        this.shape.position = { ...SHAPE_INIT_POS }
+        this.nextShape = [getRandomShape(), getRandomShapeRotation()]
+        this.addTimer()
+      }
     }
-    console.log(this.currShape.position)
-    this.addTimer()
   }
 
-  checkForCollisions = () => {
-    const f = this.currShape
-    const condition1 = f.position.top === 4
-    const condition2 = false
-    return condition1 || condition2
+  setBestScore = () => {
+    if (this.score > this.bestScore) {
+      this.bestScore = this.score
+      localStorage.setItem(LS_BEST_SCORE_NAME, this.bestScore)
+    }
   }
 }
-
-export const gameModel = new GameModel(board)
