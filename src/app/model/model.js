@@ -1,14 +1,17 @@
 import { Shape } from './shape.js'
-import { board } from './board.js'
-import { getRandomShapeRotation, getRandomShapeType } from './shape-types.js'
+import { Board } from './board.js'
+import { getRandomShapeRotation, getRandomShape } from './shape-types.js'
 import { GAME_PAUSED, GAME_STARTED, GAME_STOPED } from '../const.js'
 
+const BOARD_WIDTH = 5
+const BOARD_HEIGHT = 14
 const LS_BEST_SCORE_NAME = 'best-score'
+const SHAPE_INIT_POS = { top: 2, left: (BOARD_WIDTH / 2) | 0 }
 
-class GameModel {
-  constructor() {
+export class GameModel {
+  constructor(localStorage) {
     this.bestScore = localStorage.getItem(LS_BEST_SCORE_NAME) ?? 0
-    this.board = board
+    this.board = new Board(BOARD_WIDTH, BOARD_HEIGHT)
     this.state = GAME_STOPED
     this.shape = null
     this.nextShape = null
@@ -20,9 +23,11 @@ class GameModel {
 
   start = () => {
     this.state = GAME_STARTED
-    this.shape = new Shape(getRandomShapeType(), getRandomShapeRotation())
-    this.nextShape = new Shape(getRandomShapeType(), getRandomShapeRotation())
-    this.levelTick = 1000
+    this.board.reset()
+    this.shape = new Shape(getRandomShape(), getRandomShapeRotation())
+    this.shape.position = { ...SHAPE_INIT_POS }
+    this.nextShape = [getRandomShape(), getRandomShapeRotation()]
+    this.levelTick = 0
     this.level = 1
     this.score = 0
     this.timer = this.addTimer()
@@ -66,17 +71,20 @@ class GameModel {
     if (this.board.isOverflown()) {
       this.finish()
     } else {
-      if (this.board.canShapeMoveDown(this.shape)) {
+      if (this.board.canMoveDown(this.shape)) {
         this.shape.moveDown()
+        this.addTimer()
       } else {
         this.board.merge(this.shape)
         const removedRows = this.board.removeFullRows()
-        const hasRemovedRows = removedRows.length
+        const hasRemovedRows = Boolean(removedRows.length)
         if (hasRemovedRows) {
           this.score += removedRows.length
         }
-        this.shape = this.nextShape
-        this.nextShape = new Shape(getRandomShapeType(), getRandomShapeRotation())
+        this.shape = new Shape(this.nextShape[0], this.nextShape[1])
+        this.shape.position = { ...SHAPE_INIT_POS }
+        this.nextShape = [getRandomShape(), getRandomShapeRotation()]
+        this.addTimer()
       }
     }
   }
@@ -88,5 +96,3 @@ class GameModel {
     }
   }
 }
-
-export const gameModel = new GameModel()
