@@ -73,14 +73,27 @@ export class Board {
     return false
   }
 
+  #checkBottomBorderCollision = (shape) => {
+    const centerPos = shape.centerPos.get(shape.rotation)
+    return shape.position.top + shape.height - centerPos.i > this.height
+  }
+
+  #checkLeftBorderCollision = (shape) => {
+    const centerPos = shape.centerPos.get(shape.rotation)
+    return shape.position.left - centerPos.j < 0
+  }
+
+  #checkRightBorderCollision = (shape) => {
+    const centerPos = shape.centerPos.get(shape.rotation)
+    return shape.position.left + shape.width - centerPos.j > this.width
+  }
+
   canMoveDown = (shape) => {
     const shapeCopy = new Shape(shape.index, shape.rotation)
     shapeCopy.position = { ...shape.position }
     shapeCopy.moveDown()
 
-    const centerPos = shapeCopy.centerPos.get(shapeCopy.rotation)
-    const bottomBorderCollision =
-      shapeCopy.position.top + shapeCopy.height - centerPos.i > this.height
+    const bottomBorderCollision = this.#checkBottomBorderCollision(shapeCopy)
     if (bottomBorderCollision) {
       return false
     }
@@ -98,8 +111,7 @@ export class Board {
     shapeCopy.position = { ...shape.position }
     shapeCopy.moveLeft()
 
-    const centerPos = shapeCopy.centerPos.get(shapeCopy.rotation)
-    const leftBorderCollision = shapeCopy.position.left - centerPos.j < 0
+    const leftBorderCollision = this.#checkLeftBorderCollision(shapeCopy)
     if (leftBorderCollision) {
       return false
     }
@@ -117,9 +129,7 @@ export class Board {
     shapeCopy.position = { ...shape.position }
     shapeCopy.moveRight()
 
-    const centerPos = shapeCopy.centerPos.get(shapeCopy.rotation)
-    const rightBorderCollision =
-      shapeCopy.position.left + shapeCopy.width - centerPos.j > this.width
+    const rightBorderCollision = this.#checkRightBorderCollision(shapeCopy)
     if (rightBorderCollision) {
       return false
     }
@@ -132,8 +142,32 @@ export class Board {
     return true
   }
 
+  // TODO: Rotation should force shape to shift position if it posible
   canRotate = (shape) => {
-    console.log('canShapeRotate() Not implemented')
+    const shapeCopy = new Shape(shape.index, shape.rotation)
+    shapeCopy.position = { ...shape.position }
+    shapeCopy.rotate()
+
+    const leftBorderCollision = this.#checkLeftBorderCollision(shapeCopy)
+    if (leftBorderCollision) {
+      return false
+    }
+
+    const rightBorderCollision = this.#checkRightBorderCollision(shapeCopy)
+    if (rightBorderCollision) {
+      return false
+    }
+
+    const bottomBorderCollision = this.#checkBottomBorderCollision(shapeCopy)
+    if (bottomBorderCollision) {
+      return false
+    }
+
+    const debrisOverlap = this.#checkDebrisOverlap(shapeCopy)
+    if (debrisOverlap) {
+      return false
+    }
+
     return true
   }
 }
