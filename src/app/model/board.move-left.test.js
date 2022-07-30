@@ -9,21 +9,23 @@ console.time('Test time')
 
 const board = new Board(6, 10)
 
-// i-shape border collisions
+// left border collisions
 
 board.create()
-let typeIndex = 0
+let typeIndex = 3
 let rotation = 0
 let shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 1, left: 3 }
 let iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
+  [3, 3, 0, 0, 0, 0],
+  [3, 3, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -31,100 +33,101 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [1, 1, 1, 1, 0, 0],
 ])
-assert.strictEqual(iterations, 8)
+assert.strictEqual(iterations, 3)
 
 board.reset()
-typeIndex = 0
-rotation = 1
+typeIndex = 5
+rotation = 0
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 4 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
+  [0, 4, 4, 0, 0, 0],
+  [4, 4, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 7)
+assert.strictEqual(iterations, 3)
 
 board.reset()
 typeIndex = 0
 rotation = 2
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 3 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
   [1, 1, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 8)
+assert.strictEqual(iterations, 1)
 
 board.reset()
 typeIndex = 0
 rotation = 3
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 5 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
+  [1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 7)
+assert.strictEqual(iterations, 5)
 
 // t-shape border collisions
+
 board.reset()
 typeIndex = 6
 rotation = 0
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 3 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
+  [0, 5, 0, 0, 0, 0],
+  [5, 5, 5, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
@@ -132,87 +135,86 @@ assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 5, 0, 0, 0],
-  [0, 5, 5, 5, 0, 0],
 ])
-assert.strictEqual(iterations, 8)
+assert.strictEqual(iterations, 2)
 
 board.reset()
 typeIndex = 6
 rotation = 1
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 3 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
+  [5, 0, 0, 0, 0, 0],
+  [5, 5, 0, 0, 0, 0],
+  [5, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 5, 0, 0, 0],
-  [0, 0, 5, 5, 0, 0],
-  [0, 0, 5, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 7)
+assert.strictEqual(iterations, 3)
 
 board.reset()
 typeIndex = 6
 rotation = 2
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 3 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
+  [5, 5, 5, 0, 0, 0],
+  [0, 5, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 5, 5, 5, 0, 0],
-  [0, 0, 5, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 7)
+assert.strictEqual(iterations, 2)
 
 board.reset()
 typeIndex = 6
 rotation = 3
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 3 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
+  [0, 5, 0, 0, 0, 0],
+  [5, 5, 0, 0, 0, 0],
+  [0, 5, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 5, 0, 0, 0],
-  [0, 5, 5, 0, 0, 0],
-  [0, 0, 5, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 7)
+assert.strictEqual(iterations, 2)
 
 // t-shape debris collision
+
 board.board = [
   [1, 0, 0, 0, 0, 0],
   [1, 0, 0, 0, 0, 0],
@@ -220,108 +222,108 @@ board.board = [
   [1, 0, 0, 0, 0, 0],
   [1, 0, 0, 0, 0, 0],
   [1, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
 ]
 typeIndex = 6
-rotation = 2
+rotation = 3
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 3 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [1, 0, 0, 0, 0, 0],
+  [1, 0, 5, 0, 0, 0],
+  [1, 5, 5, 0, 0, 0],
+  [1, 0, 5, 0, 0, 0],
   [1, 0, 0, 0, 0, 0],
   [1, 0, 0, 0, 0, 0],
   [1, 0, 0, 0, 0, 0],
   [1, 0, 0, 0, 0, 0],
-  [1, 5, 5, 5, 0, 0],
-  [1, 1, 5, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 4)
+assert.strictEqual(iterations, 1)
 
 board.board = [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
   [0, 0, 7, 0, 0, 0],
-  [7, 7, 7, 0, 0, 0],
-  [7, 7, 0, 0, 0, 0],
-  [7, 7, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
 ]
 typeIndex = 6
 rotation = 2
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 3 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
+  [0, 0, 5, 5, 5, 0],
+  [0, 0, 7, 5, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 5, 5, 5, 0, 0],
-  [0, 0, 5, 0, 0, 0],
-  [0, 0, 7, 0, 0, 0],
-  [7, 7, 7, 0, 0, 0],
-  [7, 7, 0, 0, 0, 0],
-  [7, 7, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 3)
+assert.strictEqual(iterations, 0)
 
 board.board = [
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
   [7, 7, 0, 0, 0, 0],
-  [7, 7, 0, 0, 0, 0],
-  [7, 7, 0, 7, 7, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
 ]
 typeIndex = 6
 rotation = 1
 shape = new Shape(typeIndex, rotation)
-shape.position = { top: 1, left: 2 }
+shape.position = { top: 2, left: 4 }
 iterations = 0
-while (board.canMoveDown(shape)) {
+while (board.canMoveLeft(shape)) {
   iterations += 1
-  shape.moveDown()
+  shape.moveLeft()
 }
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
+  [0, 0, 5, 0, 0, 0],
+  [0, 0, 5, 5, 0, 0],
   [7, 7, 5, 0, 0, 0],
-  [7, 7, 5, 5, 0, 0],
-  [7, 7, 5, 7, 7, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
 ])
-assert.strictEqual(iterations, 7)
+assert.strictEqual(iterations, 2)
 
 /* Test result */
 
-console.log(`Board move-down tests - \x1b[1;36mDONE\x1b[0m`)
+console.log(`Board move-left tests - \x1b[1;36mDONE\x1b[0m`)
 console.timeEnd('Test time')
