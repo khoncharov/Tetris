@@ -12,7 +12,7 @@ const board = new Board(1, 1)
 // 1
 board.width = 5
 board.height = 5
-board.create(8)
+board.reset(8)
 assert.deepStrictEqual(board.board, [
   [8, 8, 8, 8, 8],
   [8, 8, 8, 8, 8],
@@ -24,13 +24,13 @@ assert.deepStrictEqual(board.board, [
 // 2
 board.width = 1
 board.height = 1
-board.create(1)
+board.reset(1)
 assert.deepStrictEqual(board.board, [[1]])
 
 // 3
 board.width = 4
 board.height = 2
-board.create(5)
+board.reset(5)
 assert.deepStrictEqual(board.board, [
   [5, 5, 5, 5],
   [5, 5, 5, 5],
@@ -52,7 +52,7 @@ let shape = new Shape(typeIndex, rotation)
 shape.position = { top: 1, left: 2 }
 board.width = 5
 board.height = 5
-board.create()
+board.reset()
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0],
@@ -69,7 +69,7 @@ shape = new Shape(typeIndex, rotation)
 shape.position = { top: 3, left: 1 }
 board.width = 5
 board.height = 5
-board.create()
+board.reset()
 board.merge(shape)
 assert.deepStrictEqual(board.board, [
   [0, 0, 0, 0, 0],

@@ -5,15 +5,11 @@ export class Board {
   constructor(width, height) {
     this.width = width
     this.height = height
-    this.board = null
+    this.board = createMatrix(this.width, this.height)
   }
 
-  create = (color = 0) => {
+  reset = (color = 0) => {
     this.board = createMatrix(this.width, this.height, color)
-  }
-
-  reset = () => {
-    this.create()
   }
 
   merge = (shape) => {
