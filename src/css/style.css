@@ -1,3 +1,11 @@
+:root {
+  --rad-l: 10px;
+  --rad-m: 5px;
+
+  --clr-white: white;
+  --clr-black: black;
+}
+
 *,
 *::after,
 *::before {
@@ -8,19 +16,24 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
   background-color: #f1f1f1;
   color: slategrey;
 }
 
+.app {
+  padding: 10px 0;
+}
+
 /* Interface */
 
-.ui-container {
+.game-container {
   display: flex;
   flex-direction: row;
   width: fit-content;
-  margin: 10px auto;
+  margin: 0 auto;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: var(--rad-l);
   background-color: white;
   box-shadow: 1px 1px 4px 1px #acb2c2;
 }
@@ -34,24 +47,28 @@ body {
   width: 150px;
 }
 
-.next-shape_container {
+.next-shape-container {
   width: 96px;
   height: 96px;
-  border-radius: 5px;
+  border-radius: var(--rad-m);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn_container {
+.btn-container {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   width: 80%;
 }
 
 .btn {
-  padding: 10px 20px;
+  padding: 8px 0;
   background-color: #e6e6e6;
   border: 1px solid lightgray;
-  border-radius: 5px;
+  border-radius: var(--rad-m);
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -66,10 +83,14 @@ body {
 
 /* Game board */
 
-.game-board {
+.game-board-container {
   position: relative;
+}
+
+.game-board {
+  /* position: relative; */
   background-color: #d2cfec;
-  border-radius: 5px;
+  border-radius: var(--rad-m);
 }
 
 /* Block */
@@ -84,7 +105,7 @@ body {
   width: 24px;
   height: 24px;
   border: 3px solid #474747;
-  border-radius: 5px;
+  border-radius: var(--rad-m);
 }
 
 .block-0 {
@@ -109,6 +130,35 @@ body {
 
 /* Shape */
 
+.shape-container {
+  position: absolute;
+}
+
 .shape {
   position: absolute;
+}
+
+/* Pop-up */
+
+.popup-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #32323280;
+}
+
+.popup {
+  width: 220px;
+  height: 180px;
+  padding: 20px 20px;
+  background-color: #fff;
+  border-radius: var(--rad-l);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

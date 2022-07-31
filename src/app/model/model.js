@@ -27,7 +27,7 @@ export class GameModel {
   changeShape = () => {
     this.shape = new Shape(this.nextShape.index, this.nextShape.rotation)
     this.shape.position = { ...SHAPE_INIT_POS }
-    this.nextShape = getRandomShape()
+    this.nextShape = this.getRandomShape()
   }
 
   start = () => {

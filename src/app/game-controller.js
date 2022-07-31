@@ -27,13 +27,19 @@ class GameController {
     if (this.game.state === GAME_STARTED) {
       this.removerTimer(this.timer)
       this.game.pause()
-      // this.view
+      this.view.startBtn.textContent = 'Resume'
     } else if (this.game.state === GAME_PAUSED) {
       this.game.resume()
       this.timer = this.addTimer()
+      this.view.startBtn.textContent = 'Pause'
     } else {
       this.game.start()
       this.timer = this.addTimer()
+      this.view.startBtn.textContent = 'Pause'
+      this.view.updateShape()
+      this.view.updateShapePosition()
+      this.view.updateNextShape()
+      this.view.updateBoard()
     }
   }
 
@@ -41,6 +47,8 @@ class GameController {
     if (this.game.state === GAME_STARTED || this.game.state === GAME_PAUSED) {
       this.removerTimer(this.timer)
       this.game.reset()
+      this.view.startBtn.textContent = 'Start'
+      this.view.updateBoard()
     }
   }
 
@@ -51,6 +59,8 @@ class GameController {
         const canRotate = this.game.board.canShapeRotate(this.game.shape)
         if (canRotate) {
           this.game.shape.rotate()
+          this.view.updateShape()
+          this.view.updateShapePosition()
         }
       }
     }
@@ -64,18 +74,21 @@ class GameController {
           const canMoveLeft = this.game.board.canMoveLeft(this.game.shape)
           if (canMoveLeft) {
             this.game.shape.moveLeft()
+            this.view.updateShapePosition()
           }
           break
         case KEY_MOVE_RIGHT:
           const canMoveRight = this.game.board.canMoveRight(this.game.shape)
           if (canMoveRight) {
             this.game.shape.moveRight()
+            this.view.updateShapePosition()
           }
           break
         case KEY_MOVE_DOWN:
           const canMoveDown = this.game.board.canMoveDown(this.game.shape)
           if (canMoveDown) {
             this.game.shape.moveDown()
+            this.view.updateShapePosition()
           }
           break
         default:
@@ -93,13 +106,14 @@ class GameController {
   }
 
   gameTimerHandler = () => {
-    console.log(this.game.shape.position)
     if (this.game.board.isOverflown()) {
       this.removerTimer()
       this.game.finish()
+      this.view.startBtn.textContent = 'Start'
     } else {
       if (this.game.board.canMoveDown(this.game.shape)) {
         this.game.shape.moveDown()
+        this.view.updateShapePosition()
         this.addTimer()
       } else {
         this.game.board.merge(this.game.shape)
@@ -109,6 +123,10 @@ class GameController {
           this.game.score += removedRows.length
         }
         this.game.changeShape()
+        this.view.updateShape()
+        this.view.updateShapePosition()
+        this.view.updateNextShape()
+        this.view.updateBoard()
         this.addTimer()
       }
     }

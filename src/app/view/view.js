@@ -1,24 +1,15 @@
-import { gameModel } from '../model/model.js'
+import { GAME_PAUSED, GAME_STARTED } from '../const.js'
 import { BLOCK_SIZE } from './const.js'
 
-class GameView {
+export class GameView {
   constructor(gameModel) {
     this.game = gameModel
     this.board = document.querySelector('.game-board')
     this.setBoardSize()
-    this.currShape = document.querySelector('.current-shape')
-    this.nextShape = document.querySelector('.next-shape_container')
+    this.shape = document.querySelector('.shape-container')
+    this.nextShape = document.querySelector('.next-shape-container')
     this.startBtn = document.querySelector('#btn-start')
     this.resetBtn = document.querySelector('#btn-reset')
-  }
-
-  update = () => {
-    if (this.game.isStarted) {
-      this.startBtn.textContent = 'Pause'
-      this.updateNextShape()
-    } else {
-      this.startBtn.textContent = 'Start'
-    }
   }
 
   setBoardSize = () => {
@@ -44,23 +35,27 @@ class GameView {
     return blocksRow
   }
 
-  createShape = (shapeType) => {
+  createShape = (shape) => {
     const shapeContainer = document.createElement('div')
     shapeContainer.classList.add('shape')
-    for (let i = 0; i < shapeType.length; i += 1) {
-      for (let j = 0; j < shapeType[i].length; j += 1) {
-        if (shapeType[i][j]) {
-          const color = shapeType[i][j]
+    for (let i = 0; i < shape.type.length; i += 1) {
+      for (let j = 0; j < shape.type[i].length; j += 1) {
+        if (shape.type[i][j]) {
+          const color = shape.type[i][j]
           const block = this.createBlock(color, i, j)
           shapeContainer.appendChild(block)
         }
       }
     }
+    shapeContainer.style.width = `${shape.width * BLOCK_SIZE}px`
+    shapeContainer.style.height = `${shape.height * BLOCK_SIZE}px`
     return shapeContainer
   }
 
-  updateBoardView = () => {
-    const board = this.game.boardArr
+  updateStats = () => {}
+
+  updateBoard = () => {
+    const board = this.game.board.board
     this.board.innerHTML = ''
 
     for (let row = 0; row < board.length; row += 1) {
@@ -74,18 +69,22 @@ class GameView {
   }
 
   updateNextShape = () => {
-    const shape = this.createShape(this.game.nextShape.type)
+    const shape = this.createShape(this.game.nextShape)
     this.nextShape.innerHTML = ''
     this.nextShape.appendChild(shape)
   }
 
-  updateCurrShape = () => {}
+  updateShape = () => {
+    this.shape.innerHTML = ''
+    const shape = this.createShape(this.game.shape)
+    this.shape.appendChild(shape)
+  }
 
-  resetCurrShape = () => {
-    const shape = this.createShape(this.game.currShape.type)
-    this.currShape.innerHTML = ''
-    this.currShape.appendChild(shape)
+  updateShapePosition = () => {
+    const center = this.game.shape.centerPos.get(this.game.shape.rotation)
+    const i = this.game.shape.position.top - center.i
+    const j = this.game.shape.position.left - center.j
+    this.shape.style.top = `${i * BLOCK_SIZE}px`
+    this.shape.style.left = `${j * BLOCK_SIZE}px`
   }
 }
-
-export const gameView = new GameView(gameModel)
