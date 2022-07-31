@@ -56,7 +56,7 @@ class GameController {
     const key = e.code
     if (this.game.state === GAME_STARTED) {
       if (key === KEY_ROTATE) {
-        const canRotate = this.game.board.canShapeRotate(this.game.shape)
+        const canRotate = this.game.board.canRotate(this.game.shape)
         if (canRotate) {
           this.game.shape.rotate()
           this.view.updateShape()
