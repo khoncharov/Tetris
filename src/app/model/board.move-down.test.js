@@ -11,7 +11,6 @@ const board = new Board(6, 10)
 
 // i-shape border collisions
 
-board.create()
 let typeIndex = 0
 let rotation = 0
 let shape = new Shape(typeIndex, rotation)

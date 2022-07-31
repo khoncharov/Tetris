@@ -1,7 +1,7 @@
-import { app } from './app/app.js'
+import { controller } from './app/controller.js'
 
 const bootstrap = () => {
-  app.init()
+  controller.init()
 }
 
 bootstrap()

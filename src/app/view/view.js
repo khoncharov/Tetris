@@ -1,24 +1,18 @@
-import { gameModel } from '../model/model.js'
 import { BLOCK_SIZE } from './const.js'
 
-class GameView {
+export class GameView {
   constructor(gameModel) {
     this.game = gameModel
     this.board = document.querySelector('.game-board')
     this.setBoardSize()
-    this.currShape = document.querySelector('.current-shape')
-    this.nextShape = document.querySelector('.next-shape_container')
+    this.updateBoard()
+    this.shape = document.querySelector('.shape-container')
+    this.nextShape = document.querySelector('.next-shape-container')
     this.startBtn = document.querySelector('#btn-start')
-    this.resetBtn = document.querySelector('#btn-reset')
-  }
-
-  update = () => {
-    if (this.game.isStarted) {
-      this.startBtn.textContent = 'Pause'
-      this.updateNextShape()
-    } else {
-      this.startBtn.textContent = 'Start'
-    }
+    this.level = document.querySelector('#game-level')
+    this.score = document.querySelector('#game-score')
+    this.bestScore = document.querySelector('#best-score')
+    this.updateStats()
   }
 
   setBoardSize = () => {
@@ -37,55 +31,80 @@ class GameView {
     return block
   }
 
-  createBlocksRow = (row) => {
+  createBlocksRow = (rowIndex) => {
     const blocksRow = document.createElement('div')
     blocksRow.classList.add('blocks-row')
-    blocksRow.style.top = `${row * BLOCK_SIZE}px`
+    blocksRow.style.top = `${rowIndex * BLOCK_SIZE}px`
+
+    this.game.board.board[rowIndex].forEach((color, colomn) => {
+      const block = this.createBlock(color, 0, colomn)
+      blocksRow.appendChild(block)
+    })
+
     return blocksRow
   }
 
-  createShape = (shapeType) => {
+  createShape = (shape) => {
     const shapeContainer = document.createElement('div')
     shapeContainer.classList.add('shape')
-    for (let i = 0; i < shapeType.length; i += 1) {
-      for (let j = 0; j < shapeType[i].length; j += 1) {
-        if (shapeType[i][j]) {
-          const color = shapeType[i][j]
+
+    for (let i = 0; i < shape.height; i += 1) {
+      for (let j = 0; j < shape.width; j += 1) {
+        if (shape.type[i][j]) {
+          const color = shape.type[i][j]
           const block = this.createBlock(color, i, j)
           shapeContainer.appendChild(block)
         }
       }
     }
+
+    shapeContainer.style.width = `${shape.width * BLOCK_SIZE}px`
+    shapeContainer.style.height = `${shape.height * BLOCK_SIZE}px`
+
     return shapeContainer
   }
 
-  updateBoardView = () => {
-    const board = this.game.boardArr
+  updateStats = () => {
+    this.level.innerHTML = `${this.game.level !== null ? this.game.level : '-'}`
+    this.score.innerHTML = `${this.game.score !== null ? this.game.score : '-'}`
+    this.bestScore.innerHTML = `${this.game.bestScore}`
+  }
+
+  updateBoard = () => {
     this.board.innerHTML = ''
 
-    for (let row = 0; row < board.length; row += 1) {
+    for (let row = 0; row < this.game.board.height; row += 1) {
       const blocksRow = this.createBlocksRow(row)
-      board[row].forEach((color, colomn) => {
-        const block = this.createBlock(color, 0, colomn)
-        blocksRow.appendChild(block)
-      })
       this.board.appendChild(blocksRow)
     }
   }
 
   updateNextShape = () => {
-    const shape = this.createShape(this.game.nextShape.type)
     this.nextShape.innerHTML = ''
-    this.nextShape.appendChild(shape)
+    if (this.game.nextShape) {
+      const shape = this.createShape(this.game.nextShape)
+      this.nextShape.appendChild(shape)
+    }
   }
 
-  updateCurrShape = () => {}
+  // TODO: unite updateShape and updateNextShape
 
-  resetCurrShape = () => {
-    const shape = this.createShape(this.game.currShape.type)
-    this.currShape.innerHTML = ''
-    this.currShape.appendChild(shape)
+  updateShape = () => {
+    this.shape.innerHTML = ''
+    if (this.game.shape) {
+      this.updateShapePosition()
+      const shape = this.createShape(this.game.shape)
+      this.shape.appendChild(shape)
+    }
+  }
+
+  updateShapePosition = () => {
+    if (this.game.shape) {
+      const center = this.game.shape.centerPos.get(this.game.shape.rotation)
+      const i = this.game.shape.position.top - center.i
+      const j = this.game.shape.position.left - center.j
+      this.shape.style.top = `${i * BLOCK_SIZE}px`
+      this.shape.style.left = `${j * BLOCK_SIZE}px`
+    }
   }
 }
-
-export const gameView = new GameView(gameModel)
