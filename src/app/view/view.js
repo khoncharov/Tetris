@@ -31,16 +31,23 @@ export class GameView {
     return block
   }
 
-  createBlocksRow = (row) => {
+  createBlocksRow = (rowIndex) => {
     const blocksRow = document.createElement('div')
     blocksRow.classList.add('blocks-row')
-    blocksRow.style.top = `${row * BLOCK_SIZE}px`
+    blocksRow.style.top = `${rowIndex * BLOCK_SIZE}px`
+
+    this.game.board.board[rowIndex].forEach((color, colomn) => {
+      const block = this.createBlock(color, 0, colomn)
+      blocksRow.appendChild(block)
+    })
+
     return blocksRow
   }
 
   createShape = (shape) => {
     const shapeContainer = document.createElement('div')
     shapeContainer.classList.add('shape')
+
     for (let i = 0; i < shape.height; i += 1) {
       for (let j = 0; j < shape.width; j += 1) {
         if (shape.type[i][j]) {
@@ -50,8 +57,10 @@ export class GameView {
         }
       }
     }
+
     shapeContainer.style.width = `${shape.width * BLOCK_SIZE}px`
     shapeContainer.style.height = `${shape.height * BLOCK_SIZE}px`
+
     return shapeContainer
   }
 
@@ -62,15 +71,10 @@ export class GameView {
   }
 
   updateBoard = () => {
-    const board = this.game.board
     this.board.innerHTML = ''
 
-    for (let row = 0; row < board.height; row += 1) {
+    for (let row = 0; row < this.game.board.height; row += 1) {
       const blocksRow = this.createBlocksRow(row)
-      board.board[row].forEach((color, colomn) => {
-        const block = this.createBlock(color, 0, colomn)
-        blocksRow.appendChild(block)
-      })
       this.board.appendChild(blocksRow)
     }
   }
