@@ -37,19 +37,20 @@ class GameController {
       this.timer = this.addTimer()
       this.view.startBtn.textContent = 'Pause'
       this.view.updateShape()
-      this.view.updateShapePosition()
       this.view.updateNextShape()
       this.view.updateBoard()
+      this.view.updateStats()
     }
   }
 
   resetBtnHandler = () => {
-    if (this.game.state === GAME_STARTED || this.game.state === GAME_PAUSED) {
-      this.removerTimer(this.timer)
-      this.game.reset()
-      this.view.startBtn.textContent = 'Start'
-      this.view.updateBoard()
-    }
+    this.removerTimer(this.timer)
+    this.game.reset()
+    this.view.startBtn.textContent = 'Start'
+    this.view.updateShape()
+    this.view.updateNextShape()
+    this.view.updateBoard()
+    this.view.updateStats()
   }
 
   rotationHandler = (e) => {
@@ -60,7 +61,6 @@ class GameController {
         if (canRotate) {
           this.game.shape.rotate()
           this.view.updateShape()
-          this.view.updateShapePosition()
         }
       }
     }
@@ -106,28 +106,33 @@ class GameController {
   }
 
   gameTimerHandler = () => {
-    if (this.game.board.isOverflown()) {
-      this.removerTimer()
-      this.game.finish()
-      this.view.startBtn.textContent = 'Start'
-    } else {
-      if (this.game.board.canMoveDown(this.game.shape)) {
-        this.game.shape.moveDown()
-        this.view.updateShapePosition()
-        this.addTimer()
+    if (this.game.state === GAME_STARTED) {
+      if (this.game.board.isOverflown()) {
+        this.removerTimer()
+        this.game.finish()
+        this.view.startBtn.textContent = 'Start'
+        // this.view show modal with results
+        this.game.setBestScore()
+        this.view.updateStats()
       } else {
-        this.game.board.merge(this.game.shape)
-        const removedRows = this.game.board.removeFullRows()
-        const hasRemovedRows = Boolean(removedRows.length)
-        if (hasRemovedRows) {
-          this.game.score += removedRows.length
+        if (this.game.board.canMoveDown(this.game.shape)) {
+          this.game.shape.moveDown()
+          this.view.updateShapePosition()
+          this.addTimer()
+        } else {
+          this.game.board.merge(this.game.shape)
+          const removedRows = this.game.board.removeFullRows()
+          const hasRemovedRows = Boolean(removedRows.length)
+          if (hasRemovedRows) {
+            this.game.score += removedRows.length
+            this.view.updateStats()
+          }
+          this.game.changeShape()
+          this.view.updateShape()
+          this.view.updateNextShape()
+          this.view.updateBoard()
+          this.addTimer()
         }
-        this.game.changeShape()
-        this.view.updateShape()
-        this.view.updateShapePosition()
-        this.view.updateNextShape()
-        this.view.updateBoard()
-        this.addTimer()
       }
     }
   }

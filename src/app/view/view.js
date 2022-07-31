@@ -1,4 +1,3 @@
-import { GAME_PAUSED, GAME_STARTED } from '../const.js'
 import { BLOCK_SIZE } from './const.js'
 
 export class GameView {
@@ -6,10 +5,14 @@ export class GameView {
     this.game = gameModel
     this.board = document.querySelector('.game-board')
     this.setBoardSize()
+    this.updateBoard()
     this.shape = document.querySelector('.shape-container')
     this.nextShape = document.querySelector('.next-shape-container')
     this.startBtn = document.querySelector('#btn-start')
-    this.resetBtn = document.querySelector('#btn-reset')
+    this.level = document.querySelector('#game-level')
+    this.score = document.querySelector('#game-score')
+    this.bestScore = document.querySelector('#best-score')
+    this.updateStats()
   }
 
   setBoardSize = () => {
@@ -38,8 +41,8 @@ export class GameView {
   createShape = (shape) => {
     const shapeContainer = document.createElement('div')
     shapeContainer.classList.add('shape')
-    for (let i = 0; i < shape.type.length; i += 1) {
-      for (let j = 0; j < shape.type[i].length; j += 1) {
+    for (let i = 0; i < shape.height; i += 1) {
+      for (let j = 0; j < shape.width; j += 1) {
         if (shape.type[i][j]) {
           const color = shape.type[i][j]
           const block = this.createBlock(color, i, j)
@@ -52,15 +55,19 @@ export class GameView {
     return shapeContainer
   }
 
-  updateStats = () => {}
+  updateStats = () => {
+    this.level.innerHTML = `${this.game.level !== null ? this.game.level : '-'}`
+    this.score.innerHTML = `${this.game.score !== null ? this.game.score : '-'}`
+    this.bestScore.innerHTML = `${this.game.bestScore}`
+  }
 
   updateBoard = () => {
-    const board = this.game.board.board
+    const board = this.game.board
     this.board.innerHTML = ''
 
-    for (let row = 0; row < board.length; row += 1) {
+    for (let row = 0; row < board.height; row += 1) {
       const blocksRow = this.createBlocksRow(row)
-      board[row].forEach((color, colomn) => {
+      board.board[row].forEach((color, colomn) => {
         const block = this.createBlock(color, 0, colomn)
         blocksRow.appendChild(block)
       })
@@ -69,22 +76,31 @@ export class GameView {
   }
 
   updateNextShape = () => {
-    const shape = this.createShape(this.game.nextShape)
     this.nextShape.innerHTML = ''
-    this.nextShape.appendChild(shape)
+    if (this.game.nextShape) {
+      const shape = this.createShape(this.game.nextShape)
+      this.nextShape.appendChild(shape)
+    }
   }
+
+  // TODO: unite updateShape and updateNextShape
 
   updateShape = () => {
     this.shape.innerHTML = ''
-    const shape = this.createShape(this.game.shape)
-    this.shape.appendChild(shape)
+    if (this.game.shape) {
+      this.updateShapePosition()
+      const shape = this.createShape(this.game.shape)
+      this.shape.appendChild(shape)
+    }
   }
 
   updateShapePosition = () => {
-    const center = this.game.shape.centerPos.get(this.game.shape.rotation)
-    const i = this.game.shape.position.top - center.i
-    const j = this.game.shape.position.left - center.j
-    this.shape.style.top = `${i * BLOCK_SIZE}px`
-    this.shape.style.left = `${j * BLOCK_SIZE}px`
+    if (this.game.shape) {
+      const center = this.game.shape.centerPos.get(this.game.shape.rotation)
+      const i = this.game.shape.position.top - center.i
+      const j = this.game.shape.position.left - center.j
+      this.shape.style.top = `${i * BLOCK_SIZE}px`
+      this.shape.style.left = `${j * BLOCK_SIZE}px`
+    }
   }
 }
