@@ -135,4 +135,4 @@ class GameController {
 
 const gameModel = new GameModel(localStorage)
 const gameView = new GameView(gameModel)
-export const gameController = new GameController(gameModel, gameView)
+export const controller = new GameController(gameModel, gameView)
