@@ -10,7 +10,6 @@ const SHAPE_INIT_POS = { top: 2, left: (BOARD_WIDTH / 2) | 0 }
 
 export class GameModel {
   constructor(localStorage) {
-    this.bestScore = localStorage.getItem(LS_BEST_SCORE_NAME) ?? 0
     this.board = new Board(BOARD_WIDTH, BOARD_HEIGHT)
     this.state = GAME_STOPED
     this.shape = null
@@ -18,6 +17,7 @@ export class GameModel {
     this.levelTick = 1000
     this.level = null
     this.score = null
+    this.bestScore = localStorage.getItem(LS_BEST_SCORE_NAME) ?? 0
   }
 
   getRandomShape = () => {
