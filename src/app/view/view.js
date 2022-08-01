@@ -65,8 +65,8 @@ export class GameView {
   }
 
   updateStats = () => {
-    this.level.innerHTML = `${this.game.level !== null ? this.game.level : '-'}`
-    this.score.innerHTML = `${this.game.score !== null ? this.game.score : '-'}`
+    this.level.innerHTML = `${this.game.level !== null ? this.game.level : 1}`
+    this.score.innerHTML = `${this.game.score !== null ? this.game.score : 0}`
     this.bestScore.innerHTML = `${this.game.bestScore}`
   }
 
