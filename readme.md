@@ -2,7 +2,10 @@
 
 ## About
 
-[Test deploy](https://soft-salamander-46affc.netlify.app)
+Game "Tetris" as I understand it. Pet project for fun and practice.
+The plan is to write prototype on html, css, js to develop and test game math and ui. Then expand it with webpack, scss, ts, react, jest, maybe nicer design and settings.
+
+Prototype deploy: https://soft-salamander-46affc.netlify.app
 
 ## Todo
 
