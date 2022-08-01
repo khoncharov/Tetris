@@ -106,7 +106,26 @@ class GameController {
   }
 
   gameTimerHandler = () => {
-    if (this.game.state === GAME_STARTED) {
+    if (this.game.state === GAME_STARTED && this.game.board.canMoveDown(this.game.shape)) {
+      this.game.shape.moveDown()
+      this.view.updateShapePosition()
+      this.addTimer()
+    } else {
+      this.game.board.merge(this.game.shape)
+
+      const removedRows = this.game.board.removeFullRows()
+      const hasRemovedRows = Boolean(removedRows.length)
+      if (hasRemovedRows) {
+        this.game.score += removedRows.length
+        this.view.updateStats()
+      }
+
+      this.game.changeShape()
+      this.view.updateShape()
+      this.view.updateNextShape()
+      this.view.updateBoard()
+      this.addTimer()
+
       if (this.game.board.isOverflown()) {
         this.removerTimer()
         this.game.finish()
@@ -114,25 +133,6 @@ class GameController {
         // this.view show modal with results
         this.game.setBestScore()
         this.view.updateStats()
-      } else {
-        if (this.game.board.canMoveDown(this.game.shape)) {
-          this.game.shape.moveDown()
-          this.view.updateShapePosition()
-          this.addTimer()
-        } else {
-          this.game.board.merge(this.game.shape)
-          const removedRows = this.game.board.removeFullRows()
-          const hasRemovedRows = Boolean(removedRows.length)
-          if (hasRemovedRows) {
-            this.game.score += removedRows.length
-            this.view.updateStats()
-          }
-          this.game.changeShape()
-          this.view.updateShape()
-          this.view.updateNextShape()
-          this.view.updateBoard()
-          this.addTimer()
-        }
       }
     }
   }
