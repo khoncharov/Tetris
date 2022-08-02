@@ -13,7 +13,7 @@ Prototype deploy: https://soft-salamander-46affc.netlify.app
 
   - [x] - Develop game model and tests (nodejs)
   - [ ] - Add possibility for a shape to shift its position during rotation in horizontal opposite direction if there's no debris
-  - [ ] - Add game levels
+  - [x] - Add game levels
   - [x] - :bug: ~~Shape can be merged if it appears at the place where it cann't move down~~
 
 - View

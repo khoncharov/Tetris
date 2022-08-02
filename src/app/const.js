@@ -7,6 +7,6 @@ export const GAME_STOPED = 0
 export const GAME_STARTED = 1
 export const GAME_PAUSED = 2
 
-export const INIT_LEVEL = 1
+export const INIT_LEVEL = 0
 export const INIT_SCORE = 0
 export const INIT_BESTSCORE = 0

@@ -126,6 +126,7 @@ class GameController {
         const hasRemovedRows = Boolean(removedRows.length)
         if (hasRemovedRows) {
           this.game.score += removedRows.length
+          this.game.setLevel()
           this.view.updateStats()
         }
 
