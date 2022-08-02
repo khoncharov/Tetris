@@ -57,7 +57,7 @@ export class GameModel {
 
   finish = () => {
     this.state = GAME_STOPED
-    this.setBestScore()
+    this.#setBestScore()
   }
 
   reset = () => {
@@ -69,7 +69,7 @@ export class GameModel {
     this.score = INIT_SCORE
   }
 
-  setBestScore = () => {
+  #setBestScore = () => {
     if (this.score > this.bestScore) {
       this.bestScore = this.score
       localStorage.setItem(LS_BEST_SCORE_NAME, this.bestScore)
