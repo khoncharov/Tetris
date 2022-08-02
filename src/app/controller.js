@@ -29,10 +29,12 @@ class GameController {
       this.removerTimer(this.timer)
       this.game.pause()
       this.view.startBtn.textContent = 'Resume'
+      this.view.showPauseAnimation()
     } else if (this.game.state === GAME_PAUSED) {
       this.game.resume()
       this.timer = this.addTimer()
       this.view.startBtn.textContent = 'Pause'
+      this.view.showPauseAnimation()
     } else {
       this.game.start()
       this.timer = this.addTimer()
@@ -48,6 +50,7 @@ class GameController {
     this.removerTimer(this.timer)
     this.game.reset()
     this.view.startBtn.textContent = 'Start'
+    this.view.showPauseAnimation()
     this.view.updateShape()
     this.view.updateNextShape()
     this.view.updateBoard()

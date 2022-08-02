@@ -1,4 +1,4 @@
-import { INIT_LEVEL, INIT_SCORE } from '../const.js'
+import { GAME_PAUSED, INIT_LEVEL, INIT_SCORE } from '../const.js'
 import { BLOCK_SIZE } from './const.js'
 
 export class GameView {
@@ -117,5 +117,11 @@ export class GameView {
 
   hideResults = () => {
     this.results.parentElement.classList.add('hidden')
+  }
+
+  showPauseAnimation = () => {
+    this.game.state === GAME_PAUSED
+      ? this.shape.classList.add('pause-animation')
+      : this.shape.classList.remove('pause-animation')
   }
 }
