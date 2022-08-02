@@ -87,8 +87,6 @@ export class GameView {
     }
   }
 
-  // TODO: unite updateShape and updateNextShape
-
   updateShape = () => {
     this.shape.innerHTML = ''
     if (this.game.shape) {
