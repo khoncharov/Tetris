@@ -4,6 +4,20 @@
 
   --clr-white: white;
   --clr-black: black;
+
+  /* Block clrs */
+
+  --clr-block-border: #474747;
+  --clr-block-1: #ff9389;
+  --clr-block-2: #ffe866;
+  --clr-block-3: #6ee690;
+  --clr-block-4: #95cffc;
+  --clr-block-5: #d5aff5;
+
+  /* Board background clrs */
+
+  --clr-block-0: #00000005;
+  --clr-board-bg: #efecf8;
 }
 
 *,
@@ -15,10 +29,10 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
   background-color: #f1f1f1;
-  color: slategrey;
+  color: #51474e;
 }
 
 .app {
@@ -58,7 +72,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #d2cfec;
+  background-color: var(--clr-board-bg);
 }
 
 .btn-container {
@@ -75,6 +89,7 @@ body {
   border-radius: var(--rad-m);
   font-size: 1rem;
   cursor: pointer;
+  color: inherit;
   transition: background-color 0.2s;
 }
 
@@ -95,7 +110,7 @@ body {
 .game-board {
   width: 408px;
   height: 600px;
-  background-color: #d2cfec;
+  background-color: var(--clr-board-bg);
   border-radius: var(--rad-m);
 }
 
@@ -110,28 +125,27 @@ body {
   position: absolute;
   width: 24px;
   height: 24px;
-  border: 3px solid #474747;
+  border: 2px solid var(--clr-block-border);
   border-radius: var(--rad-m);
 }
 
 .block-0 {
-  border-color: #cdc9eb;
-  background-color: transparent;
+  border-color: var(--clr-block-0);
 }
 .block-1 {
-  background-color: #ff9797;
+  background-color: var(--clr-block-1);
 }
 .block-2 {
-  background-color: #ffec43;
+  background-color: var(--clr-block-2);
 }
 .block-3 {
-  background-color: #26ff2f;
+  background-color: var(--clr-block-3);
 }
 .block-4 {
-  background-color: #32daff;
+  background-color: var(--clr-block-4);
 }
 .block-5 {
-  background-color: #fc6fff;
+  background-color: var(--clr-block-5);
 }
 
 /* Shape */
