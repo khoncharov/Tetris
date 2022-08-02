@@ -1,3 +1,4 @@
+import { INIT_LEVEL, INIT_SCORE } from '../const.js'
 import { BLOCK_SIZE } from './const.js'
 
 export class GameView {
@@ -65,8 +66,8 @@ export class GameView {
   }
 
   updateStats = () => {
-    this.level.innerHTML = `${this.game.level !== null ? this.game.level : 1}`
-    this.score.innerHTML = `${this.game.score !== null ? this.game.score : 0}`
+    this.level.innerHTML = `${this.game.level !== null ? this.game.level : INIT_LEVEL}`
+    this.score.innerHTML = `${this.game.score !== null ? this.game.score : INIT_SCORE}`
     this.bestScore.innerHTML = `${this.game.bestScore}`
   }
 
