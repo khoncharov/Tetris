@@ -1,5 +1,5 @@
 import assert from 'assert/strict'
-import { createMatrix, getRandomInteger } from './utils.js'
+import { createMatrix, getRandomInteger } from '../utils.js'
 
 console.time('Test time')
 
