@@ -1,6 +1,4 @@
-import assert from 'assert/strict'
-import { GameModel } from './model.js'
-import { Shape } from './shape.js'
+import { GameModel } from '../model.js'
 
 console.time('Test time')
 
@@ -20,7 +18,11 @@ const localStorage = {
 
 const game = new GameModel(localStorage)
 
+game.reset()
 game.start()
+game.pause()
+game.resume()
+game.finish()
 
 /* Test result */
 

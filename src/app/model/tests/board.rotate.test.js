@@ -1,7 +1,7 @@
 import assert from 'assert/strict'
 
-import { Board } from './board.js'
-import { Shape } from './shape.js'
+import { Board } from '../board.js'
+import { Shape } from '../shape.js'
 
 console.time('Test time')
 
