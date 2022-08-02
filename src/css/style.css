@@ -173,14 +173,18 @@ body {
 }
 
 .results {
-  width: 220px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   padding: 20px 20px;
   background-color: #fff;
   border-radius: var(--rad-l);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.result-frame {
+  padding: 10px 0 20px 20px;
 }
 
 /* Animation */
