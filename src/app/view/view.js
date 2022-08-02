@@ -14,6 +14,7 @@ export class GameView {
     this.score = document.querySelector('#game-score')
     this.bestScore = document.querySelector('#best-score')
     this.updateStats()
+    this.results = document.querySelector('.results')
   }
 
   setBoardSize = () => {
@@ -105,5 +106,16 @@ export class GameView {
       this.shape.style.top = `${i * BLOCK_SIZE}px`
       this.shape.style.left = `${j * BLOCK_SIZE}px`
     }
+  }
+
+  showResults = () => {
+    this.results.parentElement.classList.remove('hidden')
+    this.results.querySelector('#game-result-level').innerHTML = this.game.level
+    this.results.querySelector('#game-result-score').innerHTML = this.game.score
+    this.results.querySelector('#best-result-score').innerHTML = this.game.bestScore
+  }
+
+  hideResults = () => {
+    this.results.parentElement.classList.add('hidden')
   }
 }
