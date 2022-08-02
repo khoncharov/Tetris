@@ -11,11 +11,11 @@
   - [x] - Develop game model and tests (nodejs)
   - [ ] - Add possibility for a shape to shift its position during rotation in horizontal opposite direction if there's no debris
   - [ ] - Add game levels
-  - [ ] - :bug: Shape can be merged if it appears at the place where it cann't move down
+  - [x] - :bug: ~~Shape can be merged if it appears at the place where it cann't move down~~
 
 - View
   - [x] - Develop minimal game ui for desktop
-  - [ ] - Add popup with results
+  - [x] - Add popup with results
   - [ ] - Add animations (pause, appearance of a new shape, deletion of a full rows)
   - [ ] - Add settings
   - [ ] - Add sounds
