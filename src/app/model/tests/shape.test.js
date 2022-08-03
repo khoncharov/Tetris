@@ -1,6 +1,6 @@
 import assert from 'assert/strict'
 
-import { Shape } from './shape.js'
+import { Shape } from '../shape.js'
 
 console.time('Test time')
 

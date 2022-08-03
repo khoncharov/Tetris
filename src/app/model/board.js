@@ -47,7 +47,7 @@ export class Board {
   }
 
   isOverflown = () => {
-    const OVERFLOW_ROW_INDEX = 2
+    const OVERFLOW_ROW_INDEX = 3
     return this.board[OVERFLOW_ROW_INDEX].some((item) => item > 0)
   }
 
@@ -138,7 +138,6 @@ export class Board {
     return true
   }
 
-  // TODO: Rotation should force shape to shift position if it's possible
   canRotate = (shape) => {
     const shapeCopy = new Shape(shape.index, shape.rotation)
     shapeCopy.position = { ...shape.position }

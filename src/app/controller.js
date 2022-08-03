@@ -19,6 +19,7 @@ class GameController {
   init = () => {
     document.querySelector('#btn-start').addEventListener('click', this.startBtnHandler)
     document.querySelector('#btn-reset').addEventListener('click', this.resetBtnHandler)
+    document.querySelector('#btn-result-ok').addEventListener('click', this.resultsOkBtnHandler)
     document.addEventListener('keyup', this.rotationHandler)
     document.addEventListener('keypress', this.movementHandler)
   }
@@ -28,10 +29,12 @@ class GameController {
       this.removerTimer(this.timer)
       this.game.pause()
       this.view.startBtn.textContent = 'Resume'
+      this.view.showPauseAnimation()
     } else if (this.game.state === GAME_PAUSED) {
       this.game.resume()
       this.timer = this.addTimer()
       this.view.startBtn.textContent = 'Pause'
+      this.view.showPauseAnimation()
     } else {
       this.game.start()
       this.timer = this.addTimer()
@@ -47,10 +50,15 @@ class GameController {
     this.removerTimer(this.timer)
     this.game.reset()
     this.view.startBtn.textContent = 'Start'
+    this.view.showPauseAnimation()
     this.view.updateShape()
     this.view.updateNextShape()
     this.view.updateBoard()
     this.view.updateStats()
+  }
+
+  resultsOkBtnHandler = () => {
+    this.view.hideResults()
   }
 
   rotationHandler = (e) => {
@@ -107,31 +115,33 @@ class GameController {
 
   gameTimerHandler = () => {
     if (this.game.state === GAME_STARTED) {
-      if (this.game.board.isOverflown()) {
-        this.removerTimer()
-        this.game.finish()
-        this.view.startBtn.textContent = 'Start'
-        // this.view show modal with results
-        this.game.setBestScore()
-        this.view.updateStats()
+      if (this.game.board.canMoveDown(this.game.shape)) {
+        this.game.shape.moveDown()
+        this.view.updateShapePosition()
+        this.addTimer()
       } else {
-        if (this.game.board.canMoveDown(this.game.shape)) {
-          this.game.shape.moveDown()
-          this.view.updateShapePosition()
-          this.addTimer()
-        } else {
-          this.game.board.merge(this.game.shape)
-          const removedRows = this.game.board.removeFullRows()
-          const hasRemovedRows = Boolean(removedRows.length)
-          if (hasRemovedRows) {
-            this.game.score += removedRows.length
-            this.view.updateStats()
-          }
-          this.game.changeShape()
-          this.view.updateShape()
-          this.view.updateNextShape()
-          this.view.updateBoard()
-          this.addTimer()
+        this.game.board.merge(this.game.shape)
+
+        const removedRows = this.game.board.removeFullRows()
+        const hasRemovedRows = Boolean(removedRows.length)
+        if (hasRemovedRows) {
+          this.game.score += removedRows.length
+          this.game.setLevel()
+          this.view.updateStats()
+        }
+
+        this.game.changeShape()
+        this.view.updateShape()
+        this.view.updateNextShape()
+        this.view.updateBoard()
+        this.addTimer()
+
+        if (this.game.board.isOverflown()) {
+          this.removerTimer()
+          this.view.showResults()
+          this.game.finish()
+          this.view.startBtn.textContent = 'Start'
+          this.view.updateStats()
         }
       }
     }

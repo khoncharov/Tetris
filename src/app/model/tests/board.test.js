@@ -1,7 +1,7 @@
 import assert from 'assert/strict'
 
-import { Board } from './board.js'
-import { Shape } from './shape.js'
+import { Board } from '../board.js'
+import { Shape } from '../shape.js'
 
 console.time('Test time')
 
@@ -174,7 +174,7 @@ board.board = [
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0],
-  [0, 1, 0],
+  [0, 0, 0],
   [1, 1, 1],
 ]
 assert(board.isOverflown() === false)
@@ -185,8 +185,8 @@ board.height = 5
 board.board = [
   [0, 0, 0],
   [0, 0, 0],
+  [0, 0, 0],
   [0, 0, 2],
-  [1, 0, 2],
   [1, 2, 2],
 ]
 assert(board.isOverflown() === true)

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetris</title>
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="icon" type="image/x-icon" href="./favicon.png" />
   </head>
   <body>
     <main class="app">
@@ -13,6 +14,7 @@
         <section class="game-board-container">
           <div class="game-board"></div>
           <div class="shape-container"></div>
+          <div class="overflow-line"></div>
         </section>
         <section class="controls">
           <div class="next-shape-container"></div>
@@ -33,14 +35,17 @@
           </div>
         </section>
       </div>
-      <!-- <div class="popup-container">
-        <section class="popup">
+      <div class="popup-container hidden">
+        <section class="results">
           <h3>Results</h3>
-          <p>Score: 123</p>
-          <p>Best score: 99</p>
-          <button class="btn" type="button">Ok</button>
+          <div class="result-frame">
+            <p>Level: <span id="game-result-level"></span></p>
+            <p>Score: <span id="game-result-score"></span></p>
+            <p>Best: <span id="best-result-score"></span></p>
+          </div>
+          <button class="btn" type="button" id="btn-result-ok">Ok</button>
         </section>
-      </div> -->
+      </div>
     </main>
     <script src="./index.js" type="module"></script>
   </body>

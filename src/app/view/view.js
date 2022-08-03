@@ -1,3 +1,4 @@
+import { GAME_PAUSED, INIT_LEVEL, INIT_SCORE } from '../const.js'
 import { BLOCK_SIZE } from './const.js'
 
 export class GameView {
@@ -13,6 +14,7 @@ export class GameView {
     this.score = document.querySelector('#game-score')
     this.bestScore = document.querySelector('#best-score')
     this.updateStats()
+    this.results = document.querySelector('.results')
   }
 
   setBoardSize = () => {
@@ -65,8 +67,8 @@ export class GameView {
   }
 
   updateStats = () => {
-    this.level.innerHTML = `${this.game.level !== null ? this.game.level : '-'}`
-    this.score.innerHTML = `${this.game.score !== null ? this.game.score : '-'}`
+    this.level.innerHTML = `${this.game.level !== null ? this.game.level : INIT_LEVEL}`
+    this.score.innerHTML = `${this.game.score !== null ? this.game.score : INIT_SCORE}`
     this.bestScore.innerHTML = `${this.game.bestScore}`
   }
 
@@ -87,8 +89,6 @@ export class GameView {
     }
   }
 
-  // TODO: unite updateShape and updateNextShape
-
   updateShape = () => {
     this.shape.innerHTML = ''
     if (this.game.shape) {
@@ -106,5 +106,22 @@ export class GameView {
       this.shape.style.top = `${i * BLOCK_SIZE}px`
       this.shape.style.left = `${j * BLOCK_SIZE}px`
     }
+  }
+
+  showResults = () => {
+    this.results.parentElement.classList.remove('hidden')
+    this.results.querySelector('#game-result-level').innerHTML = this.game.level
+    this.results.querySelector('#game-result-score').innerHTML = this.game.score
+    this.results.querySelector('#best-result-score').innerHTML = this.game.bestScore
+  }
+
+  hideResults = () => {
+    this.results.parentElement.classList.add('hidden')
+  }
+
+  showPauseAnimation = () => {
+    this.game.state === GAME_PAUSED
+      ? this.shape.classList.add('pause-animation')
+      : this.shape.classList.remove('pause-animation')
   }
 }
