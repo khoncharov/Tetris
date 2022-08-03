@@ -80,7 +80,7 @@ export class GameModel {
   }
 
   setLevel = () => {
-    const levelCondition = this.score % LINES_PRE_LEVEL === 0
+    const levelCondition = ((this.score / LINES_PRE_LEVEL) | 0) >= this.level
     if (levelCondition) {
       this.level += 1
       gameTimeout[this.level - 1]

@@ -1,4 +1,6 @@
+import assert from 'assert/strict'
 import { GameModel } from '../model.js'
+import { getRandomInteger } from '../utils.js'
 
 console.time('Test time')
 
@@ -23,6 +25,31 @@ game.start()
 game.pause()
 game.resume()
 game.finish()
+
+/* Set level */
+
+let g = new GameModel(localStorage)
+
+g.start()
+assert.strictEqual(g.level, 1)
+assert.strictEqual(g.score, 0)
+while (g.score < 500) {
+  const points = getRandomInteger(4)
+  g.score += points
+  g.setLevel()
+  if (g.score >= 0 && g.score < 10) {
+    assert.strictEqual(g.level, 1)
+    assert.strictEqual(g.levelTick, 1000)
+  }
+  if (g.score >= 70 && g.score < 80) {
+    assert.strictEqual(g.level, 8)
+    assert.strictEqual(g.levelTick, 200)
+  }
+  if (g.score >= 200 && g.score < 210) {
+    assert.strictEqual(g.level, 21)
+    assert.strictEqual(g.levelTick, 100)
+  }
+}
 
 /* Test result */
 
