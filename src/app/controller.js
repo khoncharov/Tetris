@@ -14,15 +14,17 @@ class GameController {
     this.game = gameModel
     this.view = gameView
     this.timer = null
+    this.checkbox = document.querySelector('#cb-dark-mode')
   }
 
   init = () => {
     document.querySelector('#btn-start').addEventListener('click', this.startBtnHandler)
     document.querySelector('#btn-reset').addEventListener('click', this.resetBtnHandler)
     document.querySelector('#btn-result-ok').addEventListener('click', this.resultsOkBtnHandler)
-    document.querySelector('#cb-dark-mode').addEventListener('click', this.themeHandler)
+    this.checkbox.addEventListener('click', this.themeHandler)
     document.addEventListener('keyup', this.rotationHandler)
     document.addEventListener('keypress', this.movementHandler)
+    this.setTheme()
   }
 
   startBtnHandler = () => {
@@ -149,7 +151,22 @@ class GameController {
   }
 
   themeHandler = () => {
-    document.body.classList.toggle('dark-theme')
+    if (this.checkbox.checked) {
+      document.body.classList.add('dark-theme')
+      localStorage.setItem('dark-theme', true)
+    } else {
+      document.body.classList.remove('dark-theme')
+      localStorage.setItem('dark-theme', false)
+    }
+  }
+
+  setTheme = () => {
+    const isDarkTheme = JSON.parse(localStorage.getItem('dark-theme')) ?? false
+
+    if (isDarkTheme) {
+      document.body.classList.add('dark-theme')
+      this.checkbox.checked = true
+    }
   }
 }
 
