@@ -1,20 +1,19 @@
-:root {
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+}
+
+body {
   --rad-l: 10px;
   --rad-m: 5px;
-
-  /* Block clrs */
-
-  --clr-block-border: #474747;
-  --clr-block-1: #ff9389;
-  --clr-block-2: #ffe866;
-  --clr-block-3: #6ee690;
-  --clr-block-4: #95cffc;
-  --clr-block-5: #d5aff5;
-
-  /* Board background clrs */
-
-  --clr-block-0: #00000005;
-  --clr-board-bg: #efecf8;
 
   /* Default block size */
 
@@ -24,21 +23,79 @@
 
   --board-w: calc(var(--block-size) * 15);
   --board-h: calc(var(--block-size) * 25);
+
+  /* Basic colors */
+
+  --clr-bg: #f1f1f1;
+  --clr-card: white;
+  --clr-font: #494751;
+  --clr-shadow: #acb2c2;
+
+  /* Button colors */
+
+  --clr-btn-bg: #e6e6e6;
+  --clr-btn-border: lightgray;
+  --clr-btn-hover: gold;
+  --clr-btn-active: goldenrod;
+
+  /* Block colors */
+
+  --clr-block-border: #474747;
+  --clr-block-1: #ff9389;
+  --clr-block-2: #ffe866;
+  --clr-block-3: #6ee690;
+  --clr-block-4: #95cffc;
+  --clr-block-5: #d5aff5;
+
+  /* Board background colors */
+
+  --clr-block-0: #00000005;
+  --clr-board-bg: #efecf8;
+
+  /* Overflow */
+
+  --clr-overflow-line: #ff000033;
+
+  color-scheme: light dark;
 }
 
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body.dark-theme {
+  /* Basic colors */
+
+  --clr-bg: #1a202c;
+  --clr-card: #3a4556;
+  --clr-font: #e1f7f6;
+  --clr-shadow: #1a202c;
+
+  /* Button colors */
+
+  --clr-btn-bg: #4a5568;
+  --clr-btn-border: gray;
+  --clr-btn-hover: #0d8878;
+  --clr-btn-active: #11b8a2;
+
+  /* Block colors */
+
+  --clr-block-border: #afafaf;
+  --clr-block-1: #aa342a;
+  --clr-block-2: #8d7a0d;
+  --clr-block-3: #1c7910;
+  --clr-block-4: #125a91;
+  --clr-block-5: #6b29a1;
+
+  /* Board background colors */
+
+  --clr-block-0: #ffffff05;
+  --clr-board-bg: #37353f;
+
+  /* Overflow */
+
+  --clr-overflow-line: #00ffc833;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
-  background-color: #f1f1f1;
-  color: #51474e;
+  background-color: var(--clr-bg);
+  color: var(--clr-font);
 }
 
 .app {
@@ -58,8 +115,8 @@ body {
   margin: 0 auto;
   padding: 20px;
   border-radius: var(--rad-l);
-  background-color: white;
-  box-shadow: 1px 1px 4px 1px #acb2c2;
+  background-color: var(--clr-card);
+  box-shadow: 1px 1px 4px 1px var(--clr-shadow);
 }
 
 .controls {
@@ -94,8 +151,8 @@ body {
 
 .btn {
   padding: 10px 0;
-  background-color: #e6e6e6;
-  border: 1px solid lightgray;
+  background-color: var(--clr-btn-bg);
+  border: 1px solid var(--clr-btn-border);
   border-radius: var(--rad-m);
   font-size: 1rem;
   cursor: pointer;
@@ -104,11 +161,11 @@ body {
 }
 
 .btn:hover {
-  background-color: gold;
+  background-color: var(--clr-btn-hover);
 }
 
 .btn:active {
-  background-color: goldenrod;
+  background-color: var(--clr-btn-active);
 }
 
 /* Game board */
@@ -175,7 +232,7 @@ body {
   top: 0;
   width: 100%;
   height: calc(var(--block-size) * 4);
-  border-bottom: 2px solid #ff000033;
+  border-bottom: 2px solid var(--clr-overflow-line);
 }
 
 /* Checkbox control */
@@ -210,7 +267,7 @@ body {
 
 .checkbox:checked::before {
   transform: translateX(12px);
-  background-color: black;
+  background-color: #212533;
 }
 
 /* Pop-up */
@@ -231,7 +288,7 @@ body {
   width: 200px;
   height: 200px;
   padding: 20px 20px;
-  background-color: white;
+  background-color: var(--clr-card);
   border-radius: var(--rad-l);
   display: flex;
   flex-direction: column;

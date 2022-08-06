@@ -20,6 +20,7 @@ class GameController {
     document.querySelector('#btn-start').addEventListener('click', this.startBtnHandler)
     document.querySelector('#btn-reset').addEventListener('click', this.resetBtnHandler)
     document.querySelector('#btn-result-ok').addEventListener('click', this.resultsOkBtnHandler)
+    document.querySelector('#cb-dark-mode').addEventListener('click', this.themeHandler)
     document.addEventListener('keyup', this.rotationHandler)
     document.addEventListener('keypress', this.movementHandler)
   }
@@ -145,6 +146,10 @@ class GameController {
         }
       }
     }
+  }
+
+  themeHandler = () => {
+    document.body.classList.toggle('dark-theme')
   }
 }
 
